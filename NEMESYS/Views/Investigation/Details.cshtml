@@ -1,0 +1,30 @@
+﻿@using NEMESYS.Models
+@using Microsoft.AspNetCore.Identity
+@model ReportViewModel
+@inject UserManager<ApplicationUser> UserManager;
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h1>@Model.Title</h1>
+<div class="card" style="width: 90%;padding:20px; margin:20px;">
+    <img class="card-img-top" src="@Model.ImageUrl" alt="Image for @Model.Title" />
+    <div class="card-body">
+        <h3 class="card-title">@Model.Title</h3>
+        <p class="card-text">@Model.Content</p>
+        <p class="small">In @Model.Category.Name</p>
+        <p class="small">@Model.CreatedDate.ToShortDateString()</p>
+        <p class="small">By @Model.Author.Name</p>
+    </div>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    if (UserManager.GetUserAsync(User).Result.Id == Model.Author.Id)
+    {
+        <a asp-controller="Report" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
+    }
+}
+
+<a asp-controller="ReportPost" asp-action="Index" class="btn btn-primary">Back to list</a>
