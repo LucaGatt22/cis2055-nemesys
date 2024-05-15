@@ -1,0 +1,25 @@
+﻿@model ReportListViewModel
+
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h2>Showing @Model.TotalEntries report entries</h2>
+<div class="row">
+    @foreach (var report in Model.Reports)
+    {
+        <div class="card" style="width: 18rem;padding:20px; margin:20px;">
+            <img class="card-img-top" src="@report.ImageUrl" alt="Image for @report.Title" />
+            <div class="card-body">
+                <h3 class="card-title">@report.Title</h3>
+                <p class="small">@report.CreatedDate.ToShortDateString() in @report.Category.Name by @report.Author.Name</p>
+                <a asp-controller="report" asp-action="Details" asp-route-id="@report.Id" class="btn btn-primary">Details</a>
+            </div>
+        </div>
+    }
+
+</div>
+
+
