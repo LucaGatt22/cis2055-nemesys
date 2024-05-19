@@ -102,15 +102,15 @@ namespace NEMESYS.Models.Repositories
 
         public void UpdateInvestigation(Investigation investigation)
         {
-            var existingBlogPost = _investigations.FirstOrDefault(p => p.Id == investigation.Id);
-            if (existingBlogPost != null)
+            var existingInvestigation = _investigations.FirstOrDefault(p => p.Id == investigation.Id);
+            if (existingInvestigation != null)
             {
                 //No need to update CreatedDate (id of course won't be changed)
-                existingBlogPost.ImageUrl = investigation.ImageUrl;
-                existingBlogPost.Title = investigation.Title;
-                existingBlogPost.Content = investigation.Content;
-                existingBlogPost.UpdatedDate = investigation.UpdatedDate;
-                existingBlogPost.CategoryId = investigation.CategoryId;
+                existingInvestigation.ImageUrl = investigation.ImageUrl;
+                existingInvestigation.Title = investigation.Title;
+                existingInvestigation.Content = investigation.Content;
+                existingInvestigation.UpdatedDate = investigation.UpdatedDate;
+                existingInvestigation.CategoryId = investigation.CategoryId;
             }
         }
 
@@ -123,7 +123,7 @@ namespace NEMESYS.Models.Repositories
         {
             var category = _categories.FirstOrDefault(c => c.Id == categoryId);
 
-            //Adding all BlogPosts associated with this category
+            //Adding all Investigations associated with this category
             category.Investigations = _investigations.Where(p => p.CategoryId == categoryId).ToList();
             return category;
         }

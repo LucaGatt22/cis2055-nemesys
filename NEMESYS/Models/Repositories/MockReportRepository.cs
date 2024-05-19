@@ -101,15 +101,15 @@ namespace NEMESYS.Models.Repositories
 
         public void UpdateReport(Report report)
         {
-            var existingBlogPost = _reports.FirstOrDefault(p => p.Id == report.Id);
-            if (existingBlogPost != null)
+            var existingReport = _reports.FirstOrDefault(p => p.Id == report.Id);
+            if (existingReport != null)
             {
                 //No need to update CreatedDate (id of course won't be changed)
-                existingBlogPost.ImageUrl = report.ImageUrl;
-                existingBlogPost.Title = report.Title;
-                existingBlogPost.Content = report.Content;
-                existingBlogPost.UpdatedDate = report.UpdatedDate;
-                existingBlogPost.CategoryId = report.CategoryId;
+                existingReport.ImageUrl = report.ImageUrl;
+                existingReport.Title = report.Title;
+                existingReport.Content = report.Content;
+                existingReport.UpdatedDate = report.UpdatedDate;
+                existingReport.CategoryId = report.CategoryId;
             }
         }
 
@@ -122,7 +122,7 @@ namespace NEMESYS.Models.Repositories
         {
             var category = _categories.FirstOrDefault(c => c.Id == categoryId);
 
-            //Adding all BlogPosts associated with this category
+            //Adding all Reports associated with this category
             category.Reports = _reports.Where(p => p.CategoryId == categoryId).ToList();
             return category;
         }

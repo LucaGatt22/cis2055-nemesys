@@ -90,77 +90,6 @@ namespace NEMESYS.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("IdentityUser");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "89f9f84b-8dd1-436c-b62c-ba22a7797c1c",
-                            Email = "admin@mail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@MAIL.COM",
-                            NormalizedUserName = "ADMIN@MAIL.COM ",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAspQJq0csPwShj/LdZ+F3jClDADlCYZTEHq4bQbaVk7B4oP8rXVZskSNJmJpLbPww==",
-                            PhoneNumber = "",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "be3e895e-7648-484e-9995-dd2e8c75b5cd",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@mail.com"
-                        });
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -320,6 +249,26 @@ namespace NEMESYS.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ccf0de65-fc5f-4847-8c5d-30bb5e272330",
+                            CustomUsername = "test",
+                            Email = "admin@mail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@MAIL.COM",
+                            NormalizedUserName = "ADMIN@MAIL.COM ",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGdh6gix3swylpuVSmh7lfJhK9yOAYrAwNE8RreTBMM7UwozfY08z30zrDjZjWM8dQ==",
+                            PhoneNumber = "",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7231f489-13be-4288-aeb5-3d6fae1ad45e",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@mail.com"
+                        });
                 });
 
             modelBuilder.Entity("NEMESYS.Models.Category", b =>
@@ -450,10 +399,10 @@ namespace NEMESYS.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Content = "Today's AGA is characterized by a series of discussions and debates around ...",
-                            CreatedDate = new DateTime(2024, 5, 15, 14, 4, 7, 494, DateTimeKind.Utc).AddTicks(8233),
+                            CreatedDate = new DateTime(2024, 5, 19, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9626),
                             ImageUrl = "/images/seed1.jpg",
                             Title = "AGA Today",
-                            UpdatedDate = new DateTime(2024, 5, 15, 14, 4, 7, 494, DateTimeKind.Utc).AddTicks(8235),
+                            UpdatedDate = new DateTime(2024, 5, 19, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9628),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         },
                         new
@@ -461,10 +410,10 @@ namespace NEMESYS.Migrations
                             Id = 2,
                             CategoryId = 2,
                             Content = "Today's traffic can't be described using words. Only an image can do that ...",
-                            CreatedDate = new DateTime(2024, 5, 14, 14, 4, 7, 494, DateTimeKind.Utc).AddTicks(8238),
+                            CreatedDate = new DateTime(2024, 5, 18, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9630),
                             ImageUrl = "/images/seed2.jpg",
                             Title = "Traffic is incredible",
-                            UpdatedDate = new DateTime(2024, 5, 15, 14, 4, 7, 494, DateTimeKind.Utc).AddTicks(8241),
+                            UpdatedDate = new DateTime(2024, 5, 19, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9636),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         },
                         new
@@ -472,10 +421,10 @@ namespace NEMESYS.Migrations
                             Id = 3,
                             CategoryId = 3,
                             Content = "Clouds clouds all around us. I thought spring started already, but ...",
-                            CreatedDate = new DateTime(2024, 5, 13, 14, 4, 7, 494, DateTimeKind.Utc).AddTicks(8243),
+                            CreatedDate = new DateTime(2024, 5, 17, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9641),
                             ImageUrl = "/images/seed3.jpg",
                             Title = "When is Spring really starting?",
-                            UpdatedDate = new DateTime(2024, 5, 15, 14, 4, 7, 494, DateTimeKind.Utc).AddTicks(8244),
+                            UpdatedDate = new DateTime(2024, 5, 19, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9641),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         });
                 });

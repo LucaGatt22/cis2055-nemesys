@@ -29,9 +29,10 @@ namespace NEMESYS.Models.Contexts
 
 
             //Seed admin user
-            IdentityUser user = new IdentityUser()
+            ApplicationUser user = new ApplicationUser()
             {
                 Id = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32", //https://www.guidgenerator.com/online-guid-generator.aspx
+                CustomUsername = "test",
                 UserName = "admin@mail.com", //Has to be the email address for the login logic to work
                 NormalizedUserName = "ADMIN@MAIL.COM ",
                 Email = "admin@mail.com",
@@ -41,9 +42,9 @@ namespace NEMESYS.Models.Contexts
                 PhoneNumber = ""
             };
 
-            PasswordHasher<IdentityUser> passwordHasher = new PasswordHasher<IdentityUser>();
+            PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
             user.PasswordHash = passwordHasher.HashPassword(user, "S@fePassw0rd1"); //make sure you adhere to policies (incl confirmed etc…)
-            modelBuilder.Entity<IdentityUser>().HasData(user);
+            modelBuilder.Entity<ApplicationUser>().HasData(user);
 
             //Assign existing user to the admin role
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(

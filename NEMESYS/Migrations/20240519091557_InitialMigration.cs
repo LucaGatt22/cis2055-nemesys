@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace NEMESYS.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityAdded : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +32,7 @@ namespace NEMESYS.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CustomUsername = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -48,6 +51,19 @@ namespace NEMESYS.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,26 +172,112 @@ namespace NEMESYS.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.UpdateData(
-                table: "BlogPosts",
-                keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "CreatedDate", "UpdatedDate" },
-                values: new object[] { new DateTime(2024, 4, 17, 16, 11, 44, 519, DateTimeKind.Utc).AddTicks(5391), new DateTime(2024, 4, 17, 16, 11, 44, 519, DateTimeKind.Utc).AddTicks(5397) });
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reports_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reports_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
-            migrationBuilder.UpdateData(
-                table: "BlogPosts",
-                keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "CreatedDate", "UpdatedDate" },
-                values: new object[] { new DateTime(2024, 4, 16, 16, 11, 44, 519, DateTimeKind.Utc).AddTicks(5400), new DateTime(2024, 4, 17, 16, 11, 44, 519, DateTimeKind.Utc).AddTicks(5406) });
+            migrationBuilder.CreateTable(
+                name: "Investigations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReportId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Investigations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Investigations_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Investigations_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Investigations_Reports_ReportId",
+                        column: x => x.ReportId,
+                        principalTable: "Reports",
+                        principalColumn: "Id");
+                });
 
-            migrationBuilder.UpdateData(
-                table: "BlogPosts",
-                keyColumn: "Id",
-                keyValue: 3,
-                columns: new[] { "CreatedDate", "UpdatedDate" },
-                values: new object[] { new DateTime(2024, 4, 15, 16, 11, 44, 519, DateTimeKind.Utc).AddTicks(5408), new DateTime(2024, 4, 17, 16, 11, 44, 519, DateTimeKind.Utc).AddTicks(5409) });
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "1db56103-a3e2-4edc-afab-abde856cebe0", "1", "User", "USER" },
+                    { "d234f58e-7373-4ee5-98f0-c17892784b05", "1", "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomUsername", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "134c1566-3f64-4ab4-b1e7-2ffe11f43e32", 0, "ccf0de65-fc5f-4847-8c5d-30bb5e272330", "test", "admin@mail.com", true, false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM ", "AQAAAAEAACcQAAAAEGdh6gix3swylpuVSmh7lfJhK9yOAYrAwNE8RreTBMM7UwozfY08z30zrDjZjWM8dQ==", "", false, "7231f489-13be-4288-aeb5-3d6fae1ad45e", false, "admin@mail.com" });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Uncategorised" },
+                    { 2, "Comedy" },
+                    { 3, "News" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "d234f58e-7373-4ee5-98f0-c17892784b05", "134c1566-3f64-4ab4-b1e7-2ffe11f43e32" });
+
+            migrationBuilder.InsertData(
+                table: "Reports",
+                columns: new[] { "Id", "CategoryId", "Content", "CreatedDate", "ImageUrl", "Title", "UpdatedDate", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1, "Today's AGA is characterized by a series of discussions and debates around ...", new DateTime(2024, 5, 19, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9626), "/images/seed1.jpg", "AGA Today", new DateTime(2024, 5, 19, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9628), "134c1566-3f64-4ab4-b1e7-2ffe11f43e32" },
+                    { 2, 2, "Today's traffic can't be described using words. Only an image can do that ...", new DateTime(2024, 5, 18, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9630), "/images/seed2.jpg", "Traffic is incredible", new DateTime(2024, 5, 19, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9636), "134c1566-3f64-4ab4-b1e7-2ffe11f43e32" },
+                    { 3, 3, "Clouds clouds all around us. I thought spring started already, but ...", new DateTime(2024, 5, 17, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9641), "/images/seed3.jpg", "When is Spring really starting?", new DateTime(2024, 5, 19, 9, 15, 57, 185, DateTimeKind.Utc).AddTicks(9641), "134c1566-3f64-4ab4-b1e7-2ffe11f43e32" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -215,6 +317,31 @@ namespace NEMESYS.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Investigations_CategoryId",
+                table: "Investigations",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Investigations_ReportId",
+                table: "Investigations",
+                column: "ReportId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Investigations_UserId",
+                table: "Investigations",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_CategoryId",
+                table: "Reports",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_UserId",
+                table: "Reports",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -236,31 +363,19 @@ namespace NEMESYS.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Investigations");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.UpdateData(
-                table: "BlogPosts",
-                keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "CreatedDate", "UpdatedDate" },
-                values: new object[] { new DateTime(2024, 4, 17, 9, 35, 58, 443, DateTimeKind.Utc).AddTicks(4217), new DateTime(2024, 4, 17, 9, 35, 58, 443, DateTimeKind.Utc).AddTicks(4218) });
-
-            migrationBuilder.UpdateData(
-                table: "BlogPosts",
-                keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "CreatedDate", "UpdatedDate" },
-                values: new object[] { new DateTime(2024, 4, 16, 9, 35, 58, 443, DateTimeKind.Utc).AddTicks(4220), new DateTime(2024, 4, 17, 9, 35, 58, 443, DateTimeKind.Utc).AddTicks(4223) });
-
-            migrationBuilder.UpdateData(
-                table: "BlogPosts",
-                keyColumn: "Id",
-                keyValue: 3,
-                columns: new[] { "CreatedDate", "UpdatedDate" },
-                values: new object[] { new DateTime(2024, 4, 15, 9, 35, 58, 443, DateTimeKind.Utc).AddTicks(4224), new DateTime(2024, 4, 17, 9, 35, 58, 443, DateTimeKind.Utc).AddTicks(4225) });
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

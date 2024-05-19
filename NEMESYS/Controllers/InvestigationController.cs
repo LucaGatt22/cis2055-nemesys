@@ -280,12 +280,12 @@ namespace NEMESYS.Controllers
                             //Then persist using a new name for consistency (e.g. new Guid)
                             var extension = "." + updatedInvestigation.ImageToUpload.FileName.Split('.')[updatedInvestigation.ImageToUpload.FileName.Split('.').Length - 1];
                             fileName = Guid.NewGuid().ToString() + extension;
-                            var path = Directory.GetCurrentDirectory() + "\\wwwroot\\images\\blogposts\\" + fileName;
+                            var path = Directory.GetCurrentDirectory() + "\\wwwroot\\images\\investigations\\" + fileName;
                             using (var bits = new FileStream(path, FileMode.Create))
                             {
                                 updatedInvestigation.ImageToUpload.CopyTo(bits);
                             }
-                            imageUrl = "/images/blogposts/" + fileName;
+                            imageUrl = "/images/investigations/" + fileName;
                         }
                         else
                             imageUrl = modelToUpdate.ImageUrl;
