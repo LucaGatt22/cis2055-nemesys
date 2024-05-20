@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using NEMESYS.Models.Interfaces;
 
 namespace NEMESYS.Models.Contexts
 {
@@ -11,9 +12,9 @@ namespace NEMESYS.Models.Contexts
             //This will pass any options passed in the constructor to the base class DbContext
         }
 
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<CampusCategory> CampusCategories { get; set; }
         public DbSet<Report> Reports { get; set; }
-        public DbSet<Investigation> Investigations { get; set; }
+        public DbSet<Investigation> Investigations { get; set; } 
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,7 +25,9 @@ namespace NEMESYS.Models.Contexts
             //Seed roles
             modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole() { Id = "d234f58e-7373-4ee5-98f0-c17892784b05", Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "ADMIN" },
-                new IdentityRole() { Id = "1db56103-a3e2-4edc-afab-abde856cebe0", Name = "User", ConcurrencyStamp = "1", NormalizedName = "USER" }
+                new IdentityRole() { Id = "1db56103-a3e2-4edc-afab-abde856cebe0", Name = "Reporter", ConcurrencyStamp = "1", NormalizedName = "REPORTER" },
+                new IdentityRole() { Id = "90b7db83-4a71-4ef1-b3ae-07b481310175", Name = "Investigator", ConcurrencyStamp = "1", NormalizedName = "INVESTIGATOR" }
+
             );
 
 
@@ -51,21 +54,26 @@ namespace NEMESYS.Models.Contexts
                 new IdentityUserRole<string>() { RoleId = "d234f58e-7373-4ee5-98f0-c17892784b05", UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32" }
             );
 
-            modelBuilder.Entity<Category>().HasData(
-                new Category()
+            modelBuilder.Entity<CampusCategory>().HasData(
+                new CampusCategory() 
                 {
                     Id = 1,
-                    Name = "Uncategorised"
+                    Name = "Msida Campus"
                 },
-                new Category()
+                new CampusCategory()
                 {
                     Id = 2,
-                    Name = "Comedy"
+                    Name = "Valletta Campus"
                 },
-                new Category()
+                new CampusCategory()
                 {
                     Id = 3,
-                    Name = "News"
+                    Name = "Marsaxlokk Campus"
+                },
+                new CampusCategory()
+                {
+                    Id = 4,
+                    Name = "Gozo Campus"
                 }
             );
 
@@ -78,7 +86,7 @@ namespace NEMESYS.Models.Contexts
                     CreatedDate = DateTime.UtcNow,
                     UpdatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/seed1.jpg",
-                    CategoryId = 1,
+                    CampusCategoryId = 1,
                     UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                 },
                 new Report()
@@ -89,7 +97,7 @@ namespace NEMESYS.Models.Contexts
                     CreatedDate = DateTime.UtcNow.AddDays(-1),
                     UpdatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/seed2.jpg",
-                    CategoryId = 2,
+                    CampusCategoryId = 2,
                     UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                 },
                 new Report()
@@ -100,7 +108,7 @@ namespace NEMESYS.Models.Contexts
                     CreatedDate = DateTime.UtcNow.AddDays(-2),
                     UpdatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/seed3.jpg",
-                    CategoryId = 3,
+                    CampusCategoryId = 3,
                     UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                 }
             );

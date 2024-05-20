@@ -86,12 +86,12 @@ namespace NEMESYS.Models.Repositories
         }
 
 
-        public IEnumerable<Category> GetAllCategories()
+        public IEnumerable<ICategory> GetAllCategories()
         {
             try
             {
                 //Not loading related investigation posts
-                return _appDbContext.Categories;
+                return _appDbContext.CampusCategories;
             }
             catch (Exception ex)
             {
@@ -100,12 +100,12 @@ namespace NEMESYS.Models.Repositories
             }
         }
 
-        public Category GetCategoryById(int categoryId)
+        public ICategory GetCategoryById(int categoryId)
         {
             try
             {
                 //Not loading related ivestigation posts
-                return _appDbContext.Categories.FirstOrDefault(c => c.Id == categoryId);
+                return _appDbContext.CampusCategories.FirstOrDefault(c => c.Id == categoryId);
             }
             catch (Exception ex)
             {

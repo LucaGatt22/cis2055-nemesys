@@ -6,16 +6,16 @@ namespace NEMESYS.Models.Repositories
     public class MockReportRepository : IReportRepository
     {
         private List<Report>? _reports;
-        private List<Category>? _categories;
+        private List<CampusCategory>? _campusCategories;
 
         public MockReportRepository() { 
             if (_reports == null)
             {
                 InitializeReports();
             }
-            if (_categories == null)
+            if (_campusCategories == null)
             {
-                InitializeCategories();
+                InitializeCampusCategories();
             }
 
         }
@@ -28,7 +28,7 @@ namespace NEMESYS.Models.Repositories
                 new Report()
                 {
                     Id = 1,
-                    CategoryId = 1,
+                    CampusCategoryId = 1,
                     Title = "AGA Today",
                     Content = "Today's AGA is characterized by a series of discussions and debates around ...",
                     CreatedDate = DateTime.UtcNow,
@@ -37,7 +37,7 @@ namespace NEMESYS.Models.Repositories
                 new Report()
                 {
                     Id = 2,
-                    CategoryId = 2,
+                    CampusCategoryId = 2,
                     Title = "Traffic is incredible",
                     Content = "Today's traffic can't be described using words. Only an image can do that ...",
                     CreatedDate = DateTime.UtcNow.AddDays(-1),
@@ -46,7 +46,7 @@ namespace NEMESYS.Models.Repositories
                 new Report()
                 {
                     Id = 3,
-                    CategoryId = 2,
+                    CampusCategoryId = 2,
                     Title = "When is Spring really starting?",
                     Content = "Clouds clouds all around us. I thought spring started already, but ...",
                     CreatedDate = DateTime.UtcNow.AddDays(-2),
@@ -56,19 +56,29 @@ namespace NEMESYS.Models.Repositories
 
         }
 
-        private void InitializeCategories()
+        private void InitializeCampusCategories()
         {
-            _categories = new List<Category>()
+            _campusCategories = new List<CampusCategory>()
             {
-                new Category()
+                new CampusCategory()
                 {
                     Id = 1,
-                    Name = "Comedy"
+                    Name = "Msida Campus"
                 },
-                new Category()
+                new CampusCategory()
                 {
                     Id = 2,
-                    Name = "News"
+                    Name = "Valletta Campus"
+                },
+                new CampusCategory()
+                {
+                    Id = 3,
+                    Name = "Marsaxlokk Campus"
+                },
+                new CampusCategory()
+                {
+                    Id = 3,
+                    Name = "Gozo Campus"
                 }
             };
         }
@@ -77,19 +87,19 @@ namespace NEMESYS.Models.Repositories
         {
             //This is inefficient - but sufficient for a Mock repository
             List<Report> result = new List<Report>();
-            foreach (var post in _reports)
+            foreach (var report in _reports)
             {
-                post.Category = _categories.FirstOrDefault(c => c.Id == post.CategoryId);
-                result.Add(post);
+                report.CampusCategory = _campusCategories.FirstOrDefault(c => c.Id == report.CampusCategoryId);
+                result.Add(report);
             }
             return result;
-        }
+        } 
 
         public Report GetReportById(int reportId)
         {
             var report = _reports.FirstOrDefault(p => p.Id == reportId); //if not found, it returns null
-            var category = _categories.FirstOrDefault(c => c.Id == report.CategoryId);
-            report.Category = category;
+            var campusCategory = _campusCategories.FirstOrDefault(c => c.Id == report.CampusCategoryId);
+            report.CampusCategory = campusCategory;
             return report;
         }
 
@@ -109,23 +119,23 @@ namespace NEMESYS.Models.Repositories
                 existingReport.Title = report.Title;
                 existingReport.Content = report.Content;
                 existingReport.UpdatedDate = report.UpdatedDate;
-                existingReport.CategoryId = report.CategoryId;
+                existingReport.CampusCategoryId = report.CampusCategoryId;
             }
         }
 
 
-        public IEnumerable<Category> GetAllCategories()
+        public IEnumerable<ICategory> GetAllCampusCategories()
         {
-            return _categories;
+            return _campusCategories;
         }
-        public Category GetCategoryById(int categoryId)
+        public ICategory GetCampusCategoryById(int categoryId)
         {
-            var category = _categories.FirstOrDefault(c => c.Id == categoryId);
+            var campusCategory = _campusCategories.FirstOrDefault(c => c.Id == categoryId);
 
-            //Adding all Reports associated with this category
-            category.Reports = _reports.Where(p => p.CategoryId == categoryId).ToList();
-            return category;
-        }
+            //Adding all Reports associated with this campusCategory
+            campusCategory.Reports = _reports.Where(p => p.CampusCategoryId == categoryId).ToList();
+            return campusCategory;
+        } 
 
     }
 }

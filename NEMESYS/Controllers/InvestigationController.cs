@@ -150,7 +150,7 @@ namespace NEMESYS.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Title, Content, ImageToUpload, CategoryId")] EditInvestigationViewModel newInvestigation)
+        public IActionResult Create([Bind("Title, Content, ImageToUpload, CampusCategoryId")] EditInvestigationViewModel newInvestigation)
         {
             try
             {
@@ -193,7 +193,7 @@ namespace NEMESYS.Controllers
                         Name = c.Name
                     }).ToList();
 
-                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
+                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CampusCategoryId
                     newInvestigation.CategoryList = categoryList;
 
                     return View(newInvestigation);
@@ -217,7 +217,7 @@ namespace NEMESYS.Controllers
                 {
                     //Check if the current user has access to this resources
                     var currentUserId = _userManager.GetUserId(User);
-                    if (existingInvestigation.UserId == currentUserId || User.IsInRole("Administrator"))
+                    if (existingInvestigation.UserId == currentUserId || User.IsInRole("Investigator"))
                     {
                         EditInvestigationViewModel model = new EditInvestigationViewModel()
                         {
@@ -235,7 +235,7 @@ namespace NEMESYS.Controllers
                             Name = c.Name
                         }).ToList();
 
-                        //Attach to view model - view will pre-select according to the value in CategoryId
+                        //Attach to view model - view will pre-select according to the value in CampusCategoryId
                         model.CategoryList = categoryList;
 
                         return View(model);
@@ -255,7 +255,7 @@ namespace NEMESYS.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload, CategoryId")] EditInvestigationViewModel updatedInvestigation)
+        public IActionResult Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload, CampusCategoryId")] EditInvestigationViewModel updatedInvestigation)
         {
             try
             {
@@ -309,7 +309,7 @@ namespace NEMESYS.Controllers
                             Name = c.Name
                         }).ToList();
 
-                        //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
+                        //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CampusCategoryId
                         updatedInvestigation.CategoryList = categoryList;
 
                         return View(updatedInvestigation);

@@ -7,8 +7,8 @@
         void CreateInvestigation(Investigation investigation);
         void UpdateInvestigation(Investigation investigation);
 
-        IEnumerable<Category> GetAllCategories();
-        Category GetCategoryById(int categoryId);
+        IEnumerable<ICategory> GetAllCategories();
+        ICategory GetCategoryById(int categoryId);
 
     }
 }

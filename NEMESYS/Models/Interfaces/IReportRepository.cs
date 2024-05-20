@@ -7,8 +7,8 @@
         void CreateReport(Report report);
         void UpdateReport(Report report);
 
-        IEnumerable<Category> GetAllCategories();
-        Category GetCategoryById(int categoryId);
+        IEnumerable<ICategory> GetAllCampusCategories();
+        ICategory GetCampusCategoryById(int categoryId);
 
     }
 }

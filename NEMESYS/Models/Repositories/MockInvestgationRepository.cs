@@ -6,7 +6,7 @@ namespace NEMESYS.Models.Repositories
     public class MockInvestigationRepository : IInvestigationRepository
     {
         private List<Investigation>? _investigations;
-        private List<Category>? _categories;
+        private List<CampusCategory>? _categories;
 
         public MockInvestigationRepository()
         {
@@ -59,17 +59,27 @@ namespace NEMESYS.Models.Repositories
 
         private void InitializeCategories()
         {
-            _categories = new List<Category>()
+            _categories = new List<CampusCategory>()
             {
-                new Category()
+                new CampusCategory()
                 {
                     Id = 1,
-                    Name = "Comedy"
+                    Name = "Msida Campus"
                 },
-                new Category()
+                new CampusCategory()
                 {
                     Id = 2,
-                    Name = "News"
+                    Name = "Valletta Campus"
+                },
+                new CampusCategory()
+                {
+                    Id = 3,
+                    Name = "Marsaxlokk Campus"
+                },
+                new CampusCategory()
+                {
+                    Id = 3,
+                    Name = "Gozo Campus"
                 }
             };
         }
@@ -115,11 +125,11 @@ namespace NEMESYS.Models.Repositories
         }
 
 
-        public IEnumerable<Category> GetAllCategories()
+        public IEnumerable<ICategory> GetAllCategories()
         {
             return _categories;
         }
-        public Category GetCategoryById(int categoryId)
+        public ICategory GetCategoryById(int categoryId)
         {
             var category = _categories.FirstOrDefault(c => c.Id == categoryId);
 

@@ -21,9 +21,9 @@ namespace NEMESYS.ViewModels
         [Display(Name = "Featured Image")]
         public IFormFile? ImageToUpload { get; set; } //used only when submitting form
 
-        [Display(Name = "Investigation Category")]
+        [Display(Name = "Investigation ICategory")]
         //Property used to bind user selection.
-        [Required(ErrorMessage = "Category is required")]
+        [Required(ErrorMessage = "ICategory is required")]
         public int CategoryId { get; set; }
 
         //Property used solely to populate drop down

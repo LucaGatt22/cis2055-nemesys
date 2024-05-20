@@ -1,6 +1,6 @@
 ﻿@using NEMESYS.Models
 @using Microsoft.AspNetCore.Identity
-@model ReportViewModel
+@model InvestigationViewModel
 @inject UserManager<ApplicationUser> UserManager;
 
 @{
@@ -23,8 +23,8 @@
 {
     if (UserManager.GetUserAsync(User).Result.Id == Model.Author.Id)
     {
-        <a asp-controller="Report" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
+        <a asp-controller="Investigation" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
     }
 }
 
-<a asp-controller="ReportPost" asp-action="Index" class="btn btn-primary">Back to list</a>
+<a asp-controller="Investigation" asp-action="Index" class="btn btn-primary">Back to list</a>

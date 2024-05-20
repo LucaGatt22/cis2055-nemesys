@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NEMESYS.Models.Contexts;
 
@@ -11,9 +12,11 @@ using NEMESYS.Models.Contexts;
 namespace NEMESYS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240519115521_ChangedRoles")]
+    partial class ChangedRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,23 +265,23 @@ namespace NEMESYS.Migrations
                         {
                             Id = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "489f31ae-b73e-479a-9c5e-9a4828c7c87e",
+                            ConcurrencyStamp = "452581b6-fe12-4961-b2dc-5086088ce200",
                             CustomUsername = "test",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM ",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKohE2WrgTb+AUfGMzOZHxwZ+vPddiNlnn0owXn/wcS4/2pl+0vIAU/TzGSbFwmkMA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHes4evzcUEKDJ5KBIyM9Mb5AKOAqi0ODUnd7UlUb983CwX7ZYhpjN0JJVzBA87nhQ==",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c3ad42b7-01a2-46ea-ae3b-9cfe66ff226b",
+                            SecurityStamp = "b5aa04a8-297b-4519-8b98-f06c7f65300b",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
                 });
 
-            modelBuilder.Entity("NEMESYS.Models.CampusCategory", b =>
+            modelBuilder.Entity("NEMESYS.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -292,28 +295,23 @@ namespace NEMESYS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CampusCategories");
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Name = "Msida Campus"
+                            Name = "Uncategorised"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Valletta Campus"
+                            Name = "Comedy"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Marsaxlokk Campus"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Gozo Campus"
+                            Name = "News"
                         });
                 });
 
@@ -372,7 +370,7 @@ namespace NEMESYS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CampusCategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -399,7 +397,7 @@ namespace NEMESYS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CampusCategoryId");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
@@ -409,34 +407,34 @@ namespace NEMESYS.Migrations
                         new
                         {
                             Id = 1,
-                            CampusCategoryId = 1,
+                            CategoryId = 1,
                             Content = "Today's AGA is characterized by a series of discussions and debates around ...",
-                            CreatedDate = new DateTime(2024, 5, 20, 16, 35, 40, 120, DateTimeKind.Utc).AddTicks(6737),
+                            CreatedDate = new DateTime(2024, 5, 19, 11, 55, 21, 174, DateTimeKind.Utc).AddTicks(2279),
                             ImageUrl = "/images/seed1.jpg",
                             Title = "AGA Today",
-                            UpdatedDate = new DateTime(2024, 5, 20, 16, 35, 40, 120, DateTimeKind.Utc).AddTicks(6747),
+                            UpdatedDate = new DateTime(2024, 5, 19, 11, 55, 21, 174, DateTimeKind.Utc).AddTicks(2285),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         },
                         new
                         {
                             Id = 2,
-                            CampusCategoryId = 2,
+                            CategoryId = 2,
                             Content = "Today's traffic can't be described using words. Only an image can do that ...",
-                            CreatedDate = new DateTime(2024, 5, 19, 16, 35, 40, 120, DateTimeKind.Utc).AddTicks(6751),
+                            CreatedDate = new DateTime(2024, 5, 18, 11, 55, 21, 174, DateTimeKind.Utc).AddTicks(2287),
                             ImageUrl = "/images/seed2.jpg",
                             Title = "Traffic is incredible",
-                            UpdatedDate = new DateTime(2024, 5, 20, 16, 35, 40, 120, DateTimeKind.Utc).AddTicks(6773),
+                            UpdatedDate = new DateTime(2024, 5, 19, 11, 55, 21, 174, DateTimeKind.Utc).AddTicks(2303),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         },
                         new
                         {
                             Id = 3,
-                            CampusCategoryId = 3,
+                            CategoryId = 3,
                             Content = "Clouds clouds all around us. I thought spring started already, but ...",
-                            CreatedDate = new DateTime(2024, 5, 18, 16, 35, 40, 120, DateTimeKind.Utc).AddTicks(6776),
+                            CreatedDate = new DateTime(2024, 5, 17, 11, 55, 21, 174, DateTimeKind.Utc).AddTicks(2304),
                             ImageUrl = "/images/seed3.jpg",
                             Title = "When is Spring really starting?",
-                            UpdatedDate = new DateTime(2024, 5, 20, 16, 35, 40, 120, DateTimeKind.Utc).AddTicks(6777),
+                            UpdatedDate = new DateTime(2024, 5, 19, 11, 55, 21, 174, DateTimeKind.Utc).AddTicks(2305),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         });
                 });
@@ -494,7 +492,7 @@ namespace NEMESYS.Migrations
 
             modelBuilder.Entity("NEMESYS.Models.Investigation", b =>
                 {
-                    b.HasOne("NEMESYS.Models.CampusCategory", "Category")
+                    b.HasOne("NEMESYS.Models.Category", "Category")
                         .WithMany("Investigations")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -517,9 +515,9 @@ namespace NEMESYS.Migrations
 
             modelBuilder.Entity("NEMESYS.Models.Report", b =>
                 {
-                    b.HasOne("NEMESYS.Models.CampusCategory", "CampusCategory")
+                    b.HasOne("NEMESYS.Models.Category", "Category")
                         .WithMany("Reports")
-                        .HasForeignKey("CampusCategoryId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -529,12 +527,12 @@ namespace NEMESYS.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CampusCategory");
+                    b.Navigation("Category");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NEMESYS.Models.CampusCategory", b =>
+            modelBuilder.Entity("NEMESYS.Models.Category", b =>
                 {
                     b.Navigation("Investigations");
 

@@ -14,7 +14,7 @@
             <img class="card-img-top" src="@report.ImageUrl" alt="Image for @report.Title" />
             <div class="card-body">
                 <h3 class="card-title">@report.Title</h3>
-                <p class="small">@report.CreatedDate.ToShortDateString() in @report.Category.Name by @report.Author.Name</p>
+                <p class="small">@report.CreatedDate.ToShortDateString() in @report.CampusCategory.Name by @report.Author.Name</p>
                 <a asp-controller="report" asp-action="Details" asp-route-id="@report.Id" class="btn btn-primary">Details</a>
             </div>
         </div>

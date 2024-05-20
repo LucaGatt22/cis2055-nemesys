@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using NEMESYS.Models.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace NEMESYS.Models
@@ -13,9 +14,9 @@ namespace NEMESYS.Models
         public string ImageUrl { get; set; }
 
         //Foreign Key - navigation property (name + Id as the property name)
-        public int CategoryId { get; set; }
+        public int CampusCategoryId { get; set; }
         //Reference navigation property
-        public Category Category { get; set; }
+        public CampusCategory CampusCategory { get; set; } 
 
         //Foreign Key - navigation property
         public string UserId { get; set; }

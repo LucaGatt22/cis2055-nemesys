@@ -22,7 +22,7 @@ namespace NEMESYS.Models.Repositories
             try
             {
                 //Using Eager loading with Include
-                return _appDbContext.Reports.Include(b => b.Category).OrderBy(b => b.CreatedDate);
+                return _appDbContext.Reports.Include(b => b.CampusCategory).OrderBy(b => b.CreatedDate);
             }
             catch (Exception ex)
             {
@@ -36,8 +36,8 @@ namespace NEMESYS.Models.Repositories
             try
             {
                 //Using Eager loading with Include
-                var x = _appDbContext.Reports.Where(bp => bp.Id == 20).FirstOrDefault().Content;
-                return _appDbContext.Reports.Include(b => b.Category).FirstOrDefault(p => p.Id == reportId);
+                var x = _appDbContext.Reports.Where(bp => bp.Id == reportId).FirstOrDefault().Content;
+                return _appDbContext.Reports.Include(b => b.CampusCategory).FirstOrDefault(p => p.Id == reportId);
             }
             catch(Exception ex)
             {
@@ -72,7 +72,7 @@ namespace NEMESYS.Models.Repositories
                     existingReport.Content = report.Content;
                     existingReport.UpdatedDate = report.UpdatedDate;
                     existingReport.ImageUrl = report.ImageUrl;
-                    existingReport.CategoryId = report.CategoryId;
+                    existingReport.CampusCategoryId = report.CampusCategoryId;
 
                     _appDbContext.Entry(existingReport).State = EntityState.Modified;
                     _appDbContext.SaveChanges();
@@ -86,12 +86,12 @@ namespace NEMESYS.Models.Repositories
         }
 
 
-        public IEnumerable<Category> GetAllCategories()
+        public IEnumerable<ICategory> GetAllCampusCategories()
         {
             try
             {
                 //Not loading related report posts
-                return _appDbContext.Categories;
+                return _appDbContext.CampusCategories;
             }
             catch (Exception ex)
             {
@@ -100,12 +100,12 @@ namespace NEMESYS.Models.Repositories
             }
         }
 
-        public Category GetCategoryById(int categoryId)
+        public ICategory GetCampusCategoryById(int categoryId)
         {
             try
             {
                 //Not loading related report posts
-                return _appDbContext.Categories.FirstOrDefault(c => c.Id == categoryId);
+                return _appDbContext.CampusCategories.FirstOrDefault(c => c.Id == categoryId);
             }
             catch (Exception ex)
             {

@@ -52,10 +52,10 @@ namespace NEMESYS.Controllers
                         Content = b.Content,
                         ImageUrl = b.ImageUrl,
                         Title = b.Title,
-                        Category = new CategoryViewModel()
+                        CampusCategory = new CategoryViewModel()
                         {
-                            Id = b.Category.Id,
-                            Name = b.Category.Name
+                            Id = b.CampusCategory.Id,
+                            Name = b.CampusCategory.Name
                         },
                         Author = new AuthorViewModel()
                         {
@@ -81,7 +81,7 @@ namespace NEMESYS.Controllers
         {
             try
             {
-                var report = _reportRepository.GetReportById(30);
+                var report = _reportRepository.GetReportById(id);
                 if (report == null)
                     return NotFound();
                 else
@@ -93,10 +93,10 @@ namespace NEMESYS.Controllers
                         ImageUrl = report.ImageUrl,
                         Title = report.Title,
                         Content = report.Content,
-                        Category = new CategoryViewModel()
+                        CampusCategory = new CategoryViewModel()
                         {
-                            Id = report.Category.Id,
-                            Name = report.Category.Name
+                            Id = report.CampusCategory.Id,
+                            Name = report.CampusCategory.Name
                         },
                         Author = new AuthorViewModel()
                         {
@@ -125,7 +125,7 @@ namespace NEMESYS.Controllers
             try
             {
                 //Load all categories and create a list of CategoryViewModel
-                var categoryList = _reportRepository.GetAllCategories().Select(c => new CategoryViewModel()
+                var campusCategoryList = _reportRepository.GetAllCampusCategories().Select(c => new CategoryViewModel()
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -134,7 +134,7 @@ namespace NEMESYS.Controllers
                 //Pass the list into an EditReortViewModel, which is used by the View (all other properties may be left blank, unless you want to add some default values
                 var model = new EditReportViewModel()
                 {
-                    CategoryList = categoryList
+                    CampusCategoryList = campusCategoryList
                 };
 
                 //Pass view model to the view
@@ -150,7 +150,7 @@ namespace NEMESYS.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Title, Content, ImageToUpload, CategoryId")] EditReportViewModel newReport)
+        public IActionResult Create([Bind("Title, Content, ImageToUpload, CampusCategoryId")] EditReportViewModel newReport)
         {
             try
             {
@@ -176,7 +176,7 @@ namespace NEMESYS.Controllers
                         Content = newReport.Content,
                         CreatedDate = DateTime.UtcNow,
                         ImageUrl = "/images/reports/" + fileName,
-                        CategoryId = newReport.CategoryId,
+                        CampusCategoryId = newReport.CampusCategoryId,
                         UserId = _userManager.GetUserId(User)
                     };
 
@@ -187,14 +187,14 @@ namespace NEMESYS.Controllers
                 else
                 {
                     //Load all categories and create a list of CategoryViewModel
-                    var categoryList = _reportRepository.GetAllCategories().Select(c => new CategoryViewModel()
+                    var categoryList = _reportRepository.GetAllCampusCategories().Select(c => new CategoryViewModel()
                     {
                         Id = c.Id,
                         Name = c.Name
                     }).ToList();
 
-                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
-                    newReport.CategoryList = categoryList;
+                    //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CampusCategoryId
+                    newReport.CampusCategoryList = categoryList;
 
                     return View(newReport);
                 }
@@ -217,7 +217,7 @@ namespace NEMESYS.Controllers
                 {
                     //Check if the current user has access to this resources
                     var currentUserId = _userManager.GetUserId(User);
-                    if (existingReport.UserId == currentUserId || User.IsInRole("Administrator"))
+                    if (existingReport.UserId == currentUserId || User.IsInRole("Reporter"))
                     {
                         EditReportViewModel model = new EditReportViewModel()
                         {
@@ -225,18 +225,18 @@ namespace NEMESYS.Controllers
                             Title = existingReport.Title,
                             Content = existingReport.Content,
                             ImageUrl = existingReport.ImageUrl,
-                            CategoryId = existingReport.CategoryId
+                            CampusCategoryId = existingReport.CampusCategoryId
                         };
 
                         //Load all categories and create a list of CategoryViewModel
-                        var categoryList = _reportRepository.GetAllCategories().Select(c => new CategoryViewModel()
+                        var categoryList = _reportRepository.GetAllCampusCategories().Select(c => new CategoryViewModel()
                         {
                             Id = c.Id,
                             Name = c.Name
                         }).ToList();
 
-                        //Attach to view model - view will pre-select according to the value in CategoryId
-                        model.CategoryList = categoryList;
+                        //Attach to view model - view will pre-select according to the value in CampusCategoryId
+                        model.CampusCategoryList = categoryList;
 
                         return View(model);
                     }
@@ -255,7 +255,7 @@ namespace NEMESYS.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload, CategoryId")] EditReportViewModel updatedReport)
+        public IActionResult Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload, CampusCategoryId")] EditReportViewModel updatedReport)
         {
             try
             {
@@ -294,7 +294,7 @@ namespace NEMESYS.Controllers
                         modelToUpdate.Content = updatedReport.Content;
                         modelToUpdate.ImageUrl = imageUrl;
                         modelToUpdate.UpdatedDate = DateTime.Now;
-                        modelToUpdate.CategoryId = updatedReport.CategoryId;
+                        modelToUpdate.CampusCategoryId = updatedReport.CampusCategoryId;
                         modelToUpdate.UserId = _userManager.GetUserId(User);
 
                         _reportRepository.UpdateReport(modelToUpdate);
@@ -303,14 +303,14 @@ namespace NEMESYS.Controllers
                     else
                     {
                         //Load all categories and create a list of CategoryViewModel
-                        var categoryList = _reportRepository.GetAllCategories().Select(c => new CategoryViewModel()
+                        var campusCategoryList = _reportRepository.GetAllCampusCategories().Select(c => new CategoryViewModel()
                         {
                             Id = c.Id,
                             Name = c.Name
                         }).ToList();
 
-                        //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CategoryId
-                        updatedReport.CategoryList = categoryList;
+                        //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CampusCategoryId
+                        updatedReport.CampusCategoryList = campusCategoryList;
 
                         return View(updatedReport);
                     }
