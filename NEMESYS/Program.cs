@@ -58,6 +58,7 @@ namespace NEMESYS
             if (builder.Environment.IsDevelopment())
             {
                 builder.Services.AddTransient<IReportRepository, ReportRepository>();
+                builder.Services.AddTransient<IInvestigationRepository, InvestigationRepository>();
             }
 
             //if (builder.Environment.IsProduction())

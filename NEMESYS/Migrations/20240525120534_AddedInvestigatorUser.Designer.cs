@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NEMESYS.Models.Contexts;
 
@@ -11,9 +12,11 @@ using NEMESYS.Models.Contexts;
 namespace NEMESYS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240525120534_AddedInvestigatorUser")]
+    partial class AddedInvestigatorUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,11 +168,6 @@ namespace NEMESYS.Migrations
                         {
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32",
                             RoleId = "d234f58e-7373-4ee5-98f0-c17892784b05"
-                        },
-                        new
-                        {
-                            UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8",
-                            RoleId = "90b7db83-4a71-4ef1-b3ae-07b481310175"
                         });
                 });
 
@@ -267,37 +265,19 @@ namespace NEMESYS.Migrations
                         {
                             Id = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6973de56-1363-46b9-b7e7-368b98d82f05",
+                            ConcurrencyStamp = "9a476ebb-cc70-483e-952c-942b797a6d2c",
                             CustomUsername = "test",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
-                            NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJjgddI9rWISzt06bwR9T+NXCHW3G7UgmyQsTE/0DIGYOhNSVi4Iq6hCE2foThMKEQ==",
+                            NormalizedUserName = "ADMIN@MAIL.COM ",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAjhMrKpXHHlhqz2AdG9qagQxuzD+nFty4GZJA4IrZuhoEzR0SpQ97qOZC5HOcrBcg==",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "516b8696-ea46-44a5-a628-4f35c1077d06",
+                            SecurityStamp = "6f871cd3-dbe8-4a23-8c0c-6e240d707842",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
-                        },
-                        new
-                        {
-                            Id = "357f9cab-c811-47c9-980b-6e500ef98cd8",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "308dc79b-57cd-4dac-902a-b75e9533295a",
-                            CustomUsername = "testInvestigator",
-                            Email = "investigator@mail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "INVESTIGATOR@MAIL.COM",
-                            NormalizedUserName = "INVESTIGATOR@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEO+g3O3cyf0W+K5bXWgoy6kg4cy1fcccVy8sJSiZFUW4x8yMoTUMmhQqIZ7CEmjk2Q==",
-                            PhoneNumber = "",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "444b3f8f-ad7e-462d-a211-20722bda7dd9",
-                            TwoFactorEnabled = false,
-                            UserName = "investigator@mail.com"
                         });
                 });
 
@@ -434,10 +414,10 @@ namespace NEMESYS.Migrations
                             Id = 1,
                             CampusCategoryId = 1,
                             Content = "Today's AGA is characterized by a series of discussions and debates around ...",
-                            CreatedDate = new DateTime(2024, 5, 25, 12, 21, 3, 358, DateTimeKind.Utc).AddTicks(7576),
+                            CreatedDate = new DateTime(2024, 5, 25, 12, 5, 34, 286, DateTimeKind.Utc).AddTicks(4218),
                             ImageUrl = "/images/seed1.jpg",
                             Title = "AGA Today",
-                            UpdatedDate = new DateTime(2024, 5, 25, 12, 21, 3, 358, DateTimeKind.Utc).AddTicks(7581),
+                            UpdatedDate = new DateTime(2024, 5, 25, 12, 5, 34, 286, DateTimeKind.Utc).AddTicks(4223),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         },
                         new
@@ -445,10 +425,10 @@ namespace NEMESYS.Migrations
                             Id = 2,
                             CampusCategoryId = 2,
                             Content = "Today's traffic can't be described using words. Only an image can do that ...",
-                            CreatedDate = new DateTime(2024, 5, 24, 12, 21, 3, 358, DateTimeKind.Utc).AddTicks(7589),
+                            CreatedDate = new DateTime(2024, 5, 24, 12, 5, 34, 286, DateTimeKind.Utc).AddTicks(4229),
                             ImageUrl = "/images/seed2.jpg",
                             Title = "Traffic is incredible",
-                            UpdatedDate = new DateTime(2024, 5, 25, 12, 21, 3, 358, DateTimeKind.Utc).AddTicks(7596),
+                            UpdatedDate = new DateTime(2024, 5, 25, 12, 5, 34, 286, DateTimeKind.Utc).AddTicks(4241),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         },
                         new
@@ -456,10 +436,10 @@ namespace NEMESYS.Migrations
                             Id = 3,
                             CampusCategoryId = 3,
                             Content = "Clouds clouds all around us. I thought spring started already, but ...",
-                            CreatedDate = new DateTime(2024, 5, 23, 12, 21, 3, 358, DateTimeKind.Utc).AddTicks(7599),
+                            CreatedDate = new DateTime(2024, 5, 23, 12, 5, 34, 286, DateTimeKind.Utc).AddTicks(4244),
                             ImageUrl = "/images/seed3.jpg",
                             Title = "When is Spring really starting?",
-                            UpdatedDate = new DateTime(2024, 5, 25, 12, 21, 3, 358, DateTimeKind.Utc).AddTicks(7600),
+                            UpdatedDate = new DateTime(2024, 5, 25, 12, 5, 34, 286, DateTimeKind.Utc).AddTicks(4245),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         });
                 });

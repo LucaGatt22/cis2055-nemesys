@@ -1,4 +1,6 @@
-﻿namespace NEMESYS.ViewModels
+﻿using NEMESYS.Models;
+
+namespace NEMESYS.ViewModels
 {
     public class ReportViewModel
     {
@@ -10,6 +12,7 @@
         public int ReadCount { get; set; }
         public CategoryViewModel CampusCategory { get; set; }
         public AuthorViewModel Author { get; set; }
+        public Status Status { get; set; }
 
     }
 }

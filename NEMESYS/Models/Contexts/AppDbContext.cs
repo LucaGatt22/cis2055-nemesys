@@ -13,6 +13,8 @@ namespace NEMESYS.Models.Contexts
         }
 
         public DbSet<CampusCategory> CampusCategories { get; set; }
+
+        public DbSet<Status> Statuses { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Investigation> Investigations { get; set; } 
 
@@ -31,13 +33,13 @@ namespace NEMESYS.Models.Contexts
             );
 
 
-            //Seed admin user
-            ApplicationUser user = new ApplicationUser()
+            //Seed admin userAdmin
+            ApplicationUser userAdmin = new ApplicationUser()
             {
                 Id = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32", //https://www.guidgenerator.com/online-guid-generator.aspx
                 CustomUsername = "test",
                 UserName = "admin@mail.com", //Has to be the email address for the login logic to work
-                NormalizedUserName = "ADMIN@MAIL.COM ",
+                NormalizedUserName = "ADMIN@MAIL.COM",
                 Email = "admin@mail.com",
                 NormalizedEmail = "ADMIN@MAIL.COM",
                 LockoutEnabled = false,
@@ -45,13 +47,29 @@ namespace NEMESYS.Models.Contexts
                 PhoneNumber = ""
             };
 
-            PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
-            user.PasswordHash = passwordHasher.HashPassword(user, "S@fePassw0rd1"); //make sure you adhere to policies (incl confirmed etc…)
-            modelBuilder.Entity<ApplicationUser>().HasData(user);
+            //Seed Investigator user
+            ApplicationUser userInvestigator = new ApplicationUser()
+            {
+                Id = "357f9cab-c811-47c9-980b-6e500ef98cd8", //https://www.guidgenerator.com/online-guid-generator.aspx
+                CustomUsername = "testInvestigator",
+                UserName = "investigator@mail.com", //Has to be the email address for the login logic to work
+                NormalizedUserName = "INVESTIGATOR@MAIL.COM",
+                Email = "investigator@mail.com",
+                NormalizedEmail = "INVESTIGATOR@MAIL.COM",
+                LockoutEnabled = false,
+                EmailConfirmed = true,
+                PhoneNumber = ""
+            };
 
-            //Assign existing user to the admin role
+            PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
+            userAdmin.PasswordHash = passwordHasher.HashPassword(userAdmin, "S@fePassw0rd1"); //make sure you adhere to policies (incl confirmed etc…)
+            userInvestigator.PasswordHash = passwordHasher.HashPassword(userInvestigator, "S@fePassw0rd1");
+            modelBuilder.Entity<ApplicationUser>().HasData(userAdmin,userInvestigator);
+
+            //Assign existing userAdmin to the admin role and investigator to investigator role.
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string>() { RoleId = "d234f58e-7373-4ee5-98f0-c17892784b05", UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32" }
+                new IdentityUserRole<string>() { RoleId = "d234f58e-7373-4ee5-98f0-c17892784b05", UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32" },
+                new IdentityUserRole<string>() { RoleId = "90b7db83-4a71-4ef1-b3ae-07b481310175", UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8" }
             );
 
             modelBuilder.Entity<CampusCategory>().HasData(
@@ -76,6 +94,23 @@ namespace NEMESYS.Models.Contexts
                     Name = "Gozo Campus"
                 }
             );
+            modelBuilder.Entity<Status>().HasData(
+              new Status()
+              {
+                  Id = 1,
+                  Name = "Being Investigated"
+              },
+              new Status()
+              {
+                  Id = 2,
+                  Name = "No Action Required"
+              },
+              new Status()
+              {
+                  Id = 3,
+                  Name = "Closed"
+              }
+          );
 
             modelBuilder.Entity<Report>().HasData(
                 new Report()

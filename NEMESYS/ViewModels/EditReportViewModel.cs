@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NEMESYS.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace NEMESYS.ViewModels
 {
@@ -28,6 +29,8 @@ namespace NEMESYS.ViewModels
 
         //Property used solely to populate drop down
         public List<CategoryViewModel>? CampusCategoryList { get; set; }
+
+        public Status Status { get; set; }
 
     }
 }

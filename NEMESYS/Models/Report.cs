@@ -24,6 +24,8 @@ namespace NEMESYS.Models
 
 
         public List<Investigation> GetAssociatedInvestigations { get; }
-        
+
+        public Status Status { get; set; }
+
     }
 }
