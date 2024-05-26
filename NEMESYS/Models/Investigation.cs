@@ -14,13 +14,12 @@ namespace NEMESYS.Models
         public string ImageUrl { get; set; }
 
         //Foreign Key - navigation property (name + Id as the property name)
-        public int CategoryId { get; set; }
+        public int ReportInvestigationId { get; set; }
         //Reference navigation property
-        public CampusCategory Category { get; set; }
-
+        public ReportInvestigation ReportInvestigation { get; set; }
+        
         //Foreign Key - navigation property
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
-        
     }
 }

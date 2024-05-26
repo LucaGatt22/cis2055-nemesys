@@ -1,6 +1,8 @@
-﻿namespace NEMESYS.Models
+﻿using NEMESYS.Models.Interfaces;
+
+namespace NEMESYS.Models
 {
-    public class Status
+    public class Status : ICategory
     {
         public int Id { get; set; }
         public string Name { get; set; }

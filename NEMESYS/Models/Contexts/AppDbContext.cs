@@ -16,7 +16,8 @@ namespace NEMESYS.Models.Contexts
 
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Report> Reports { get; set; }
-        public DbSet<Investigation> Investigations { get; set; } 
+        public DbSet<Investigation> Investigations { get; set; }
+        public DbSet<ReportInvestigation> ReportInvestigations { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -122,6 +123,7 @@ namespace NEMESYS.Models.Contexts
                     UpdatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/seed1.jpg",
                     CampusCategoryId = 1,
+                    StatusId = 1,
                     UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                 },
                 new Report()
@@ -133,6 +135,7 @@ namespace NEMESYS.Models.Contexts
                     UpdatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/seed2.jpg",
                     CampusCategoryId = 2,
+                    StatusId = 2,
                     UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                 },
                 new Report()
@@ -144,9 +147,23 @@ namespace NEMESYS.Models.Contexts
                     UpdatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/seed3.jpg",
                     CampusCategoryId = 3,
+                    StatusId = 3,
                     UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                 }
             );
+            modelBuilder.Entity<Investigation>().HasData(
+                new List<Investigation>
+                {
+                    new Investigation { Id = 1, Title = "AGA Today", Content = "Today's AGA is characterized by ...", CreatedDate = DateTime.UtcNow, ImageUrl = "/images/seed1.jpg" },
+                    new Investigation { Id = 2, Title = "Traffic is incredible", Content = "Today's traffic can't be described using words...", CreatedDate = DateTime.UtcNow.AddDays(-1), ImageUrl = "/images/seed2.jpg" }
+                });
+            modelBuilder.Entity<ReportInvestigation>().HasData(
+                new List<ReportInvestigation>
+                {
+                    new ReportInvestigation { ReportId = 1, InvestigationId = 1 },
+                    new ReportInvestigation { ReportId = 2, InvestigationId = 2 }
+                });
+
         }
 
 

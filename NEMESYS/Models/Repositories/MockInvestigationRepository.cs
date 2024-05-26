@@ -6,7 +6,7 @@ namespace NEMESYS.Models.Repositories
     public class MockInvestigationRepository : IInvestigationRepository
     {
         private List<Investigation>? _investigations;
-        private List<CampusCategory>? _categories;
+        //private List<CampusCategory>? _categories;
 
         public MockInvestigationRepository()
         {
@@ -14,10 +14,10 @@ namespace NEMESYS.Models.Repositories
             {
                 InitializeInvestigations();
             }
-            if (_categories == null)
-            {
-                InitializeCategories();
-            }
+            //if (_categories == null)
+            //{
+                //InitializeCategories();
+            //}
 
         }
 
@@ -29,7 +29,7 @@ namespace NEMESYS.Models.Repositories
                 new Investigation()
                 {
                     Id = 1,
-                    CategoryId = 1,
+                    ReportInvestigationId = 1,
                     Title = "AGA Today",
                     Content = "Today's AGA is characterized by a series of discussions and debates around ...",
                     CreatedDate = DateTime.UtcNow,
@@ -38,7 +38,7 @@ namespace NEMESYS.Models.Repositories
                 new Investigation()
                 {
                     Id = 2,
-                    CategoryId = 2,
+                    ReportInvestigationId = 2,
                     Title = "Traffic is incredible",
                     Content = "Today's traffic can't be described using words. Only an image can do that ...",
                     CreatedDate = DateTime.UtcNow.AddDays(-1),
@@ -47,7 +47,7 @@ namespace NEMESYS.Models.Repositories
                 new Investigation()
                 {
                     Id = 3,
-                    CategoryId = 2,
+                    ReportInvestigationId = 2,
                     Title = "When is Spring really starting?",
                     Content = "Clouds clouds all around us. I thought spring started already, but ...",
                     CreatedDate = DateTime.UtcNow.AddDays(-2),
@@ -57,40 +57,14 @@ namespace NEMESYS.Models.Repositories
 
         }
 
-        private void InitializeCategories()
-        {
-            _categories = new List<CampusCategory>()
-            {
-                new CampusCategory()
-                {
-                    Id = 1,
-                    Name = "Msida Campus"
-                },
-                new CampusCategory()
-                {
-                    Id = 2,
-                    Name = "Valletta Campus"
-                },
-                new CampusCategory()
-                {
-                    Id = 3,
-                    Name = "Marsaxlokk Campus"
-                },
-                new CampusCategory()
-                {
-                    Id = 3,
-                    Name = "Gozo Campus"
-                }
-            };
-        }
-
+        
         public IEnumerable<Investigation> GetAllInvestigations()
         {
             //This is inefficient - but sufficient for a Mock repository
             List<Investigation> result = new List<Investigation>();
             foreach (var post in _investigations)
             {
-                post.Category = _categories.FirstOrDefault(c => c.Id == post.CategoryId);
+                //post.Category = _categories.FirstOrDefault(c => c.Id == post.ReportId);
                 result.Add(post);
             }
             return result;
@@ -99,8 +73,8 @@ namespace NEMESYS.Models.Repositories
         public Investigation GetInvestigationById(int investigationId)
         {
             var investigation = _investigations.FirstOrDefault(p => p.Id == investigationId); //if not found, it returns null
-            var category = _categories.FirstOrDefault(c => c.Id == investigation.CategoryId);
-            investigation.Category = category;
+            //var category = _categories.FirstOrDefault(c => c.Id == investigation.ReportId);
+            //investigation.Category = category;
             return investigation;
         }
 
@@ -120,23 +94,23 @@ namespace NEMESYS.Models.Repositories
                 existingInvestigation.Title = investigation.Title;
                 existingInvestigation.Content = investigation.Content;
                 existingInvestigation.UpdatedDate = investigation.UpdatedDate;
-                existingInvestigation.CategoryId = investigation.CategoryId;
+                //existingInvestigation.ReportId = investigation.ReportId;
             }
         }
 
 
-        public IEnumerable<ICategory> GetAllCategories()
-        {
-            return _categories;
-        }
-        public ICategory GetCategoryById(int categoryId)
-        {
-            var category = _categories.FirstOrDefault(c => c.Id == categoryId);
+        //public IEnumerable<ICategory> GetAllStatuses()
+        //{
+        //    return _categories;
+        //}
+        //public ICategory GetStatusById(int categoryId)
+        //{
+        //    var category = _categories.FirstOrDefault(c => c.Id == categoryId);
 
-            //Adding all Investigations associated with this category
-            category.Investigations = _investigations.Where(p => p.CategoryId == categoryId).ToList();
-            return category;
-        }
+        //    //Adding all Investigations associated with this category
+        //    category.Investigations = _investigations.Where(p => p.ReportId == categoryId).ToList();
+        //    return category;
+        //}
 
     }
 }

@@ -10,5 +10,9 @@
         IEnumerable<ICategory> GetAllCampusCategories();
         ICategory GetCampusCategoryById(int categoryId);
 
+        IEnumerable<ICategory> GetAllStatuses();
+        ICategory GetStatusById(int statusId);
+
+
     }
 }

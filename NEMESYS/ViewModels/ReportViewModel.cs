@@ -10,9 +10,9 @@ namespace NEMESYS.ViewModels
         public string Content { get; set; }
         public string ImageUrl { get; set; }
         public int ReadCount { get; set; }
-        public CategoryViewModel CampusCategory { get; set; }
+        public CampusCategoryViewModel CampusCategory { get; set; }
         public AuthorViewModel Author { get; set; }
-        public Status Status { get; set; }
+        public StatusViewModel Status { get; set; }
 
     }
 }

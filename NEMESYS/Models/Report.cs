@@ -13,6 +13,8 @@ namespace NEMESYS.Models
         public string Content { get; set; }
         public string ImageUrl { get; set; }
 
+        public int ReadCount {get; set; }
+
         //Foreign Key - navigation property (name + Id as the property name)
         public int CampusCategoryId { get; set; }
         //Reference navigation property
@@ -22,10 +24,11 @@ namespace NEMESYS.Models
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
-
-        public List<Investigation> GetAssociatedInvestigations { get; }
-
+        //User can view related investigation
+        public int ReportInvestigationId { get; set; }
+        public ReportInvestigation ReportInvestigation { get; set; }
+        public int StatusId { get; set; }
         public Status Status { get; set; }
-
+        
     }
 }

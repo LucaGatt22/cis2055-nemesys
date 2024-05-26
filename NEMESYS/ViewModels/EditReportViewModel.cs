@@ -28,9 +28,15 @@ namespace NEMESYS.ViewModels
         public int CampusCategoryId { get; set; }
 
         //Property used solely to populate drop down
-        public List<CategoryViewModel>? CampusCategoryList { get; set; }
+        public List<CampusCategoryViewModel>? CampusCategoryList { get; set; }
 
-        public Status Status { get; set; }
+        //[Display(Name = "Status Category")]
+        //Property used to bind user selection.
+        //[Required(ErrorMessage = "Status is required")]
+
+        //public int StatusId { get; set; }
+        //public List<StatusViewModel>? StatusList { get; set; }
+       
 
     }
 }

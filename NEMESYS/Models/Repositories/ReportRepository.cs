@@ -113,6 +113,33 @@ namespace NEMESYS.Models.Repositories
                 throw;
             }
         }
+        public IEnumerable<ICategory> GetAllStatuses()
+        {
+            try
+            {
+                //Not loading related report posts
+                return _appDbContext.Statuses;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw;
+            }
+        }
+
+        public ICategory GetStatusById(int statusId)
+        {
+            try
+            {
+                //Not loading related report posts
+                return _appDbContext.Statuses.FirstOrDefault(c => c.Id == statusId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw;
+            }
+        }
 
     }
 }

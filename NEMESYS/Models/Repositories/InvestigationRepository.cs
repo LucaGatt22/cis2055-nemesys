@@ -22,7 +22,8 @@ namespace NEMESYS.Models.Repositories
             try
             {
                 //Using Eager loading with Include
-                return _appDbContext.Investigations.Include(b => b.Category).OrderBy(b => b.CreatedDate);
+                //return _appDbContext.Investigations.Include(b => b.Category).OrderBy(b => b.CreatedDate);
+                return _appDbContext.Investigations.OrderBy(b => b.CreatedDate);
             }
             catch (Exception ex)
             {
@@ -37,7 +38,8 @@ namespace NEMESYS.Models.Repositories
             {
                 //Using Eager loading with Include
                 var x = _appDbContext.Investigations.Where(bp => bp.Id == 20).FirstOrDefault().Content;
-                return _appDbContext.Investigations.Include(b => b.Category).FirstOrDefault(p => p.Id == investigationId);
+                //return _appDbContext.Investigations.Include(b => b.Category).FirstOrDefault(p => p.Id == investigationId);
+                return _appDbContext.Investigations.FirstOrDefault(p => p.Id == investigationId);
             }
             catch(Exception ex)
             {
@@ -72,7 +74,7 @@ namespace NEMESYS.Models.Repositories
                     existingInvestigation.Content = investigation.Content;
                     existingInvestigation.UpdatedDate = investigation.UpdatedDate;
                     existingInvestigation.ImageUrl = investigation.ImageUrl;
-                    existingInvestigation.CategoryId = investigation.CategoryId;
+                    existingInvestigation.ReportInvestigation.ReportId = investigation.ReportInvestigation.ReportId;
 
                     _appDbContext.Entry(existingInvestigation).State = EntityState.Modified;
                     _appDbContext.SaveChanges();
@@ -86,7 +88,7 @@ namespace NEMESYS.Models.Repositories
         }
 
 
-        public IEnumerable<ICategory> GetAllCategories()
+        public IEnumerable<ICategory> GetAllStatuses()
         {
             try
             {
@@ -100,7 +102,7 @@ namespace NEMESYS.Models.Repositories
             }
         }
 
-        public ICategory GetCategoryById(int categoryId)
+        public ICategory GetStatusById(int categoryId)
         {
             try
             {

@@ -8,6 +8,6 @@
         public List<Report> Reports { get; set; }
 
 
-        public List<Investigation> Investigations { get; set; }
+        
     }
 }

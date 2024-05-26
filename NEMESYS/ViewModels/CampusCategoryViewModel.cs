@@ -1,8 +1,10 @@
 ﻿namespace NEMESYS.ViewModels
 {
-    public class CategoryViewModel
+    public class CampusCategoryViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+
     }
 }

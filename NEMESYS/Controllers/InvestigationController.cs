@@ -5,6 +5,7 @@ using NEMESYS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Composition;
 
 namespace NEMESYS.Controllers
 {
@@ -12,6 +13,7 @@ namespace NEMESYS.Controllers
     public class InvestigationController : Controller
     {
         private readonly IInvestigationRepository _investigationRepository;
+        private readonly IReportRepository _reportRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<InvestigationController> _logger;
 
@@ -27,55 +29,55 @@ namespace NEMESYS.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            try
-            {
-                //Just to test logging
-                _logger.LogInformation("Information message");
-                _logger.LogWarning("Warning message");
-                _logger.LogError("Error message");
-                _logger.LogCritical("Critical message");
+        //public IActionResult Index()
+        //{
+        //    try
+        //    {
+        //        //Just to test logging
+        //        _logger.LogInformation("Information message");
+        //        _logger.LogWarning("Warning message");
+        //        _logger.LogError("Error message");
+        //        _logger.LogCritical("Critical message");
 
-                //Constructing a View Model to be passed on to the view
-                var investigations = _investigationRepository.GetAllInvestigations().OrderByDescending(b => b.CreatedDate); ;
-                var model = new InvestigationListViewModel()
-                {
-                    TotalEntries = _investigationRepository.GetAllInvestigations().Count(),
-                    Investigations = _investigationRepository
-                    .GetAllInvestigations()
-                    .OrderByDescending(b => b.CreatedDate)
-                    .Select(b => new InvestigationViewModel
-                    {
-                        Id = b.Id,
-                        CreatedDate = b.CreatedDate,
-                        Content = b.Content,
-                        ImageUrl = b.ImageUrl,
-                        Title = b.Title,
-                        Category = new CategoryViewModel()
-                        {
-                            Id = b.Category.Id,
-                            Name = b.Category.Name
-                        },
-                        Author = new AuthorViewModel()
-                        {
-                            Id = b.UserId,
-                            Name = (_userManager.FindByIdAsync(b.UserId).Result != null) ?
-                                _userManager.FindByIdAsync(b.UserId).Result.UserName : "Anonymous"
-                        }
-                    })
-                };
+        //        //Constructing a View Model to be passed on to the view
+        //        var investigations = _investigationRepository.GetAllInvestigations().OrderByDescending(b => b.CreatedDate); ;
+        //        var model = new InvestigationListViewModel()
+        //        {
+        //            TotalEntries = _investigationRepository.GetAllInvestigations().Count(),
+        //            Investigations = _investigationRepository
+        //            .GetAllInvestigations()
+        //            .OrderByDescending(b => b.CreatedDate)
+        //            .Select(b => new InvestigationViewModel
+        //            {
+        //                Id = b.Id,
+        //                CreatedDate = b.CreatedDate,
+        //                Content = b.Content,
+        //                ImageUrl = b.ImageUrl,
+        //                Title = b.Title,
+        //                Category = new CampusCategoryViewModel()
+        //                {
+        //                    Id = b.Category.Id,
+        //                    Name = b.Category.Name
+        //                },
+        //                Author = new AuthorViewModel()
+        //                {
+        //                    Id = b.UserId,
+        //                    Name = (_userManager.FindByIdAsync(b.UserId).Result != null) ?
+        //                        _userManager.FindByIdAsync(b.UserId).Result.UserName : "Anonymous"
+        //                }
+        //            })
+        //        };
 
-                return View(model);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message, ex);
-                return View("Error");
-            }
+        //        return View(model);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        return View("Error");
+        //    }
 
 
-        }
+        //}
 
         public IActionResult Details(int id)
         {
@@ -93,10 +95,30 @@ namespace NEMESYS.Controllers
                         ImageUrl = investigation.ImageUrl,
                         Title = investigation.Title,
                         Content = investigation.Content,
-                        Category = new CategoryViewModel()
+                        Report = new ReportViewModel()
                         {
-                            Id = investigation.Category.Id,
-                            Name = investigation.Category.Name
+                            Id = investigation.ReportInvestigation.Report.Id,
+                            CreatedDate = investigation.ReportInvestigation.Report.CreatedDate,
+                            Title = investigation.ReportInvestigation.Report.Title,
+                            Content = investigation.ReportInvestigation.Report.Content,
+                            ImageUrl = investigation.ReportInvestigation.Report.ImageUrl,
+                            ReadCount = investigation.ReportInvestigation.Report.ReadCount,
+                            CampusCategory = new CampusCategoryViewModel()
+                            {
+                                Id = investigation.ReportInvestigation.Report.CampusCategory.Id,
+                                Name = investigation.ReportInvestigation.Report.CampusCategory.Name
+                            },
+                            Author = new AuthorViewModel()
+                            {
+                                Id = investigation.ReportInvestigation.Report.UserId,
+                                Name = (_userManager.FindByIdAsync(investigation.ReportInvestigation.Report.UserId).Result != null) ?
+                                _userManager.FindByIdAsync(investigation.ReportInvestigation.Report.UserId).Result.UserName : "Anonymous"
+                            },
+                            Status = new StatusViewModel()
+                            {
+                                Id = investigation.ReportInvestigation.Report.Status.Id,
+                                Name = investigation.ReportInvestigation.Report.Status.Name
+                            }
                         },
                         Author = new AuthorViewModel()
                         {
@@ -120,21 +142,22 @@ namespace NEMESYS.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int reportId)
         {
             try
             {
-                //Load all categories and create a list of CategoryViewModel
-                var categoryList = _investigationRepository.GetAllCategories().Select(c => new CategoryViewModel()
+                //Load all categories and create a list of StatusViewModel
+                var statusList = _reportRepository.GetAllStatuses().Select(c => new StatusViewModel()
                 {
                     Id = c.Id,
-                    Name = c.Name,
+                    Name = c.Name
                 }).ToList();
 
                 //Pass the list into an EditReortViewModel, which is used by the View (all other properties may be left blank, unless you want to add some default values
                 var model = new EditInvestigationViewModel()
                 {
-                    CategoryList = categoryList
+                    StatusList = statusList,
+                    ReportId = reportId
                 };
 
                 //Pass view model to the view
@@ -150,7 +173,7 @@ namespace NEMESYS.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Title, Content, ImageToUpload, CampusCategoryId")] EditInvestigationViewModel newInvestigation)
+        public IActionResult Create([Bind("Title, Content, ImageToUpload, ReportId")] EditInvestigationViewModel newInvestigation)
         {
             try
             {
@@ -176,9 +199,16 @@ namespace NEMESYS.Controllers
                         Content = newInvestigation.Content,
                         CreatedDate = DateTime.UtcNow,
                         ImageUrl = "/images/investigations/" + fileName,
-                        CategoryId = newInvestigation.CategoryId,
+                        //ReportInvestigationId = newInvestigation.ReportInvestigation.ReportInvestigationId,
+                        //StatusId = newInvestigation.ReportInvestigation.Report.StatusId,
                         UserId = _userManager.GetUserId(User)
                     };
+                    ReportInvestigation reportInvestigation = new ReportInvestigation()
+                    {
+                        ReportId = newInvestigation.ReportId,
+                        Investigation = investigation
+                    };
+                    investigation.ReportInvestigation = reportInvestigation;
 
                     //Persist to repository
                     _investigationRepository.CreateInvestigation(investigation);
@@ -186,15 +216,15 @@ namespace NEMESYS.Controllers
                 }
                 else
                 {
-                    //Load all categories and create a list of CategoryViewModel
-                    var categoryList = _investigationRepository.GetAllCategories().Select(c => new CategoryViewModel()
+                    //Load all categories and create a list of CampusCategoryViewModel
+                    var categoryList = _reportRepository.GetAllStatuses().Select(c => new StatusViewModel()
                     {
                         Id = c.Id,
                         Name = c.Name
                     }).ToList();
 
                     //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CampusCategoryId
-                    newInvestigation.CategoryList = categoryList;
+                    newInvestigation.StatusList = categoryList;
 
                     return View(newInvestigation);
                 }
@@ -225,18 +255,8 @@ namespace NEMESYS.Controllers
                             Title = existingInvestigation.Title,
                             Content = existingInvestigation.Content,
                             ImageUrl = existingInvestigation.ImageUrl,
-                            CategoryId = existingInvestigation.CategoryId
+                            StatusId = existingInvestigation.ReportInvestigation.Report.StatusId
                         };
-
-                        //Load all categories and create a list of CategoryViewModel
-                        var categoryList = _investigationRepository.GetAllCategories().Select(c => new CategoryViewModel()
-                        {
-                            Id = c.Id,
-                            Name = c.Name
-                        }).ToList();
-
-                        //Attach to view model - view will pre-select according to the value in CampusCategoryId
-                        model.CategoryList = categoryList;
 
                         return View(model);
                     }
@@ -255,7 +275,7 @@ namespace NEMESYS.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload, CampusCategoryId")] EditInvestigationViewModel updatedInvestigation)
+        public IActionResult Edit([FromRoute] int id, [Bind("Id, Title, Content, ImageToUpload")] EditInvestigationViewModel updatedInvestigation)
         {
             try
             {
@@ -294,7 +314,8 @@ namespace NEMESYS.Controllers
                         modelToUpdate.Content = updatedInvestigation.Content;
                         modelToUpdate.ImageUrl = imageUrl;
                         modelToUpdate.UpdatedDate = DateTime.Now;
-                        modelToUpdate.CategoryId = updatedInvestigation.CategoryId;
+                        //modelToUpdate.ReportId = updatedInvestigation.ReportId;
+                        modelToUpdate.ReportInvestigation.Report.StatusId = updatedInvestigation.StatusId;
                         modelToUpdate.UserId = _userManager.GetUserId(User);
 
                         _investigationRepository.UpdateInvestigation(modelToUpdate);
@@ -302,17 +323,7 @@ namespace NEMESYS.Controllers
                     }
                     else
                     {
-                        //Load all categories and create a list of CategoryViewModel
-                        var categoryList = _investigationRepository.GetAllCategories().Select(c => new CategoryViewModel()
-                        {
-                            Id = c.Id,
-                            Name = c.Name
-                        }).ToList();
-
-                        //Re-attach to view model before sending back to the View (this is necessary so that the View can repopulate the drop down and pre-select according to the CampusCategoryId
-                        updatedInvestigation.CategoryList = categoryList;
-
-                        return View(updatedInvestigation);
+                       return View(updatedInvestigation);
                     }
                 }
                 else

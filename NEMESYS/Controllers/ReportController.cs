@@ -52,7 +52,7 @@ namespace NEMESYS.Controllers
                         Content = b.Content,
                         ImageUrl = b.ImageUrl,
                         Title = b.Title,
-                        CampusCategory = new CategoryViewModel()
+                        CampusCategory = new CampusCategoryViewModel()
                         {
                             Id = b.CampusCategory.Id,
                             Name = b.CampusCategory.Name
@@ -62,9 +62,16 @@ namespace NEMESYS.Controllers
                             Id = b.UserId,
                             Name = (_userManager.FindByIdAsync(b.UserId).Result != null) ?
                                 _userManager.FindByIdAsync(b.UserId).Result.UserName : "Anonymous"
+                        },
+                        Status = new StatusViewModel()
+                        {
+                            Id = b.Status.Id,
+                            Name = b.Status.Name
                         }
+
                     })
                 };
+               
 
                 return View(model);
             }
@@ -93,7 +100,7 @@ namespace NEMESYS.Controllers
                         ImageUrl = report.ImageUrl,
                         Title = report.Title,
                         Content = report.Content,
-                        CampusCategory = new CategoryViewModel()
+                        CampusCategory = new CampusCategoryViewModel()
                         {
                             Id = report.CampusCategory.Id,
                             Name = report.CampusCategory.Name
@@ -103,6 +110,11 @@ namespace NEMESYS.Controllers
                             Id = report.UserId,
                             Name = (_userManager.FindByIdAsync(report.UserId).Result != null) ?
                                 _userManager.FindByIdAsync(report.UserId).Result.UserName : "Anonymous"
+                        },
+                        Status = new StatusViewModel()
+                        {
+                            Id = report.Status.Id,
+                            Name = report.Status.Name
                         }
                     };
 
@@ -124,8 +136,15 @@ namespace NEMESYS.Controllers
         {
             try
             {
-                //Load all categories and create a list of CategoryViewModel
-                var campusCategoryList = _reportRepository.GetAllCampusCategories().Select(c => new CategoryViewModel()
+                //Load all categories and create a list of CampusCategoryViewModel
+                var campusCategoryList = _reportRepository.GetAllCampusCategories().Select(c => new CampusCategoryViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                }).ToList();
+
+                //Load all categories and create a list of StatusViewModel
+                var statusList = _reportRepository.GetAllStatuses().Select(c => new StatusViewModel()
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -134,7 +153,8 @@ namespace NEMESYS.Controllers
                 //Pass the list into an EditReortViewModel, which is used by the View (all other properties may be left blank, unless you want to add some default values
                 var model = new EditReportViewModel()
                 {
-                    CampusCategoryList = campusCategoryList
+                    CampusCategoryList = campusCategoryList,
+                    //StatusList = statusList
                 };
 
                 //Pass view model to the view
@@ -186,8 +206,8 @@ namespace NEMESYS.Controllers
                 }
                 else
                 {
-                    //Load all categories and create a list of CategoryViewModel
-                    var categoryList = _reportRepository.GetAllCampusCategories().Select(c => new CategoryViewModel()
+                    //Load all categories and create a list of CampusCategoryViewModel
+                    var categoryList = _reportRepository.GetAllCampusCategories().Select(c => new CampusCategoryViewModel()
                     {
                         Id = c.Id,
                         Name = c.Name
@@ -228,8 +248,8 @@ namespace NEMESYS.Controllers
                             CampusCategoryId = existingReport.CampusCategoryId
                         };
 
-                        //Load all categories and create a list of CategoryViewModel
-                        var categoryList = _reportRepository.GetAllCampusCategories().Select(c => new CategoryViewModel()
+                        //Load all categories and create a list of CampusCategoryViewModel
+                        var categoryList = _reportRepository.GetAllCampusCategories().Select(c => new CampusCategoryViewModel()
                         {
                             Id = c.Id,
                             Name = c.Name
@@ -302,8 +322,8 @@ namespace NEMESYS.Controllers
                     }
                     else
                     {
-                        //Load all categories and create a list of CategoryViewModel
-                        var campusCategoryList = _reportRepository.GetAllCampusCategories().Select(c => new CategoryViewModel()
+                        //Load all categories and create a list of CampusCategoryViewModel
+                        var campusCategoryList = _reportRepository.GetAllCampusCategories().Select(c => new CampusCategoryViewModel()
                         {
                             Id = c.Id,
                             Name = c.Name

@@ -7,6 +7,7 @@ namespace NEMESYS.Models.Repositories
     {
         private List<Report>? _reports;
         private List<CampusCategory>? _campusCategories;
+        private List<Status>? _statuses;
 
         public MockReportRepository() { 
             if (_reports == null)
@@ -135,7 +136,20 @@ namespace NEMESYS.Models.Repositories
             //Adding all Reports associated with this campusCategory
             campusCategory.Reports = _reports.Where(p => p.CampusCategoryId == categoryId).ToList();
             return campusCategory;
-        } 
+        }
+
+        public IEnumerable<ICategory> GetAllStatuses()
+        {
+            return _statuses;
+        }
+        public ICategory GetStatusById(int statusId)
+        {
+            var status = _statuses.FirstOrDefault(c => c.Id == statusId);
+
+            //Adding all Reports associated with this statusCategory
+            status.Reports = _reports.Where(p => p.StatusId == statusId).ToList();
+            return status;
+        }
 
     }
 }
