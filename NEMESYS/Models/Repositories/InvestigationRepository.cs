@@ -9,7 +9,7 @@ namespace NEMESYS.Models.Repositories
 
         private readonly AppDbContext _appDbContext;
         private readonly ILogger<InvestigationRepository> _logger;
-
+        
         public InvestigationRepository(AppDbContext appDbContext, ILogger<InvestigationRepository> logger)
         {
             _appDbContext = appDbContext;
@@ -74,7 +74,7 @@ namespace NEMESYS.Models.Repositories
                     existingInvestigation.Content = investigation.Content;
                     existingInvestigation.UpdatedDate = investigation.UpdatedDate;
                     existingInvestigation.ImageUrl = investigation.ImageUrl;
-                    existingInvestigation.ReportInvestigation.ReportId = investigation.ReportInvestigation.ReportId;
+                    
 
                     _appDbContext.Entry(existingInvestigation).State = EntityState.Modified;
                     _appDbContext.SaveChanges();
@@ -102,18 +102,22 @@ namespace NEMESYS.Models.Repositories
             }
         }
 
-        public ICategory GetStatusById(int categoryId)
+        public ICategory GetStatusById(int statusId)
         {
             try
             {
                 //Not loading related ivestigation posts
-                return _appDbContext.CampusCategories.FirstOrDefault(c => c.Id == categoryId);
+                return _appDbContext.CampusCategories.FirstOrDefault(c => c.Id == statusId);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
                 throw;
             }
+        }
+        public Report GetReportByInvestigationId(int investigationId)
+        {
+            return _appDbContext.Reports.Where(r => r.InvestigationId == investigationId).FirstOrDefault();
         }
 
     }

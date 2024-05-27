@@ -95,31 +95,7 @@ namespace NEMESYS.Controllers
                         ImageUrl = investigation.ImageUrl,
                         Title = investigation.Title,
                         Content = investigation.Content,
-                        Report = new ReportViewModel()
-                        {
-                            Id = investigation.ReportInvestigation.Report.Id,
-                            CreatedDate = investigation.ReportInvestigation.Report.CreatedDate,
-                            Title = investigation.ReportInvestigation.Report.Title,
-                            Content = investigation.ReportInvestigation.Report.Content,
-                            ImageUrl = investigation.ReportInvestigation.Report.ImageUrl,
-                            ReadCount = investigation.ReportInvestigation.Report.ReadCount,
-                            CampusCategory = new CampusCategoryViewModel()
-                            {
-                                Id = investigation.ReportInvestigation.Report.CampusCategory.Id,
-                                Name = investigation.ReportInvestigation.Report.CampusCategory.Name
-                            },
-                            Author = new AuthorViewModel()
-                            {
-                                Id = investigation.ReportInvestigation.Report.UserId,
-                                Name = (_userManager.FindByIdAsync(investigation.ReportInvestigation.Report.UserId).Result != null) ?
-                                _userManager.FindByIdAsync(investigation.ReportInvestigation.Report.UserId).Result.UserName : "Anonymous"
-                            },
-                            Status = new StatusViewModel()
-                            {
-                                Id = investigation.ReportInvestigation.Report.Status.Id,
-                                Name = investigation.ReportInvestigation.Report.Status.Name
-                            }
-                        },
+                        
                         Author = new AuthorViewModel()
                         {
                             Id = investigation.UserId,
@@ -199,16 +175,11 @@ namespace NEMESYS.Controllers
                         Content = newInvestigation.Content,
                         CreatedDate = DateTime.UtcNow,
                         ImageUrl = "/images/investigations/" + fileName,
-                        //ReportInvestigationId = newInvestigation.ReportInvestigation.ReportInvestigationId,
-                        //StatusId = newInvestigation.ReportInvestigation.Report.StatusId,
+                        //ReportInvestigationId = newInvestigation.Investigation.ReportInvestigationId,
+                        //StatusId = newInvestigation.Investigation.Report.StatusId,
                         UserId = _userManager.GetUserId(User)
                     };
-                    ReportInvestigation reportInvestigation = new ReportInvestigation()
-                    {
-                        ReportId = newInvestigation.ReportId,
-                        Investigation = investigation
-                    };
-                    investigation.ReportInvestigation = reportInvestigation;
+                    
 
                     //Persist to repository
                     _investigationRepository.CreateInvestigation(investigation);
@@ -255,7 +226,7 @@ namespace NEMESYS.Controllers
                             Title = existingInvestigation.Title,
                             Content = existingInvestigation.Content,
                             ImageUrl = existingInvestigation.ImageUrl,
-                            StatusId = existingInvestigation.ReportInvestigation.Report.StatusId
+                            StatusId = _investigationRepository.GetReportByInvestigationId(existingInvestigation.Id).StatusId,
                         };
 
                         return View(model);
@@ -315,7 +286,6 @@ namespace NEMESYS.Controllers
                         modelToUpdate.ImageUrl = imageUrl;
                         modelToUpdate.UpdatedDate = DateTime.Now;
                         //modelToUpdate.ReportId = updatedInvestigation.ReportId;
-                        modelToUpdate.ReportInvestigation.Report.StatusId = updatedInvestigation.StatusId;
                         modelToUpdate.UserId = _userManager.GetUserId(User);
 
                         _investigationRepository.UpdateInvestigation(modelToUpdate);

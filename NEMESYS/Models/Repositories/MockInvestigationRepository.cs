@@ -29,7 +29,6 @@ namespace NEMESYS.Models.Repositories
                 new Investigation()
                 {
                     Id = 1,
-                    ReportInvestigationId = 1,
                     Title = "AGA Today",
                     Content = "Today's AGA is characterized by a series of discussions and debates around ...",
                     CreatedDate = DateTime.UtcNow,
@@ -38,7 +37,6 @@ namespace NEMESYS.Models.Repositories
                 new Investigation()
                 {
                     Id = 2,
-                    ReportInvestigationId = 2,
                     Title = "Traffic is incredible",
                     Content = "Today's traffic can't be described using words. Only an image can do that ...",
                     CreatedDate = DateTime.UtcNow.AddDays(-1),
@@ -47,7 +45,6 @@ namespace NEMESYS.Models.Repositories
                 new Investigation()
                 {
                     Id = 3,
-                    ReportInvestigationId = 2,
                     Title = "When is Spring really starting?",
                     Content = "Clouds clouds all around us. I thought spring started already, but ...",
                     CreatedDate = DateTime.UtcNow.AddDays(-2),
@@ -96,6 +93,11 @@ namespace NEMESYS.Models.Repositories
                 existingInvestigation.UpdatedDate = investigation.UpdatedDate;
                 //existingInvestigation.ReportId = investigation.ReportId;
             }
+        }
+
+        public Report GetReportByInvestigationId(int id)
+        {
+            throw new NotImplementedException();
         }
 
 

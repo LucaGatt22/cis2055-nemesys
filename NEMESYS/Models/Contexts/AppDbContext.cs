@@ -17,7 +17,7 @@ namespace NEMESYS.Models.Contexts
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Investigation> Investigations { get; set; }
-        public DbSet<ReportInvestigation> ReportInvestigations { get; set; }
+        
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -154,17 +154,28 @@ namespace NEMESYS.Models.Contexts
             modelBuilder.Entity<Investigation>().HasData(
                 new List<Investigation>
                 {
-                    new Investigation { Id = 1, Title = "AGA Today", Content = "Today's AGA is characterized by ...", CreatedDate = DateTime.UtcNow, ImageUrl = "/images/seed1.jpg" },
-                    new Investigation { Id = 2, Title = "Traffic is incredible", Content = "Today's traffic can't be described using words...", CreatedDate = DateTime.UtcNow.AddDays(-1), ImageUrl = "/images/seed2.jpg" }
+                    new Investigation() 
+                    { 
+                        Id = 1,
+                        UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8",
+                        Title = "AGA Today", 
+                        Content = "Today's AGA is characterized by ...", 
+                        CreatedDate = DateTime.UtcNow, 
+                        UpdatedDate = DateTime.UtcNow,
+                        ImageUrl = "/images/seed1.jpg" 
+                    },
+                    new Investigation() 
+                    { 
+                        Id = 2,
+                        UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8",
+                        Title = "Traffic is incredible", 
+                        Content = "Today's traffic can't be described using words...", 
+                        CreatedDate = DateTime.UtcNow.AddDays(-1), 
+                        UpdatedDate = DateTime.UtcNow.AddDays(-1),
+                        ImageUrl = "/images/seed2.jpg" 
+                    }
                 });
-            modelBuilder.Entity<ReportInvestigation>().HasData(
-                new List<ReportInvestigation>
-                {
-                    new ReportInvestigation { ReportId = 1, InvestigationId = 1 },
-                    new ReportInvestigation { ReportId = 2, InvestigationId = 2 }
-                });
-
-        }
+         }
 
 
     }

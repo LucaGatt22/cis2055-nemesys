@@ -6,7 +6,7 @@
         Investigation GetInvestigationById(int investigationId);
         void CreateInvestigation(Investigation investigation);
         void UpdateInvestigation(Investigation investigation);
-
-
+        Report GetReportByInvestigationId(int id);
+        
     }
 }

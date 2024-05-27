@@ -25,8 +25,8 @@ namespace NEMESYS.Models
         public ApplicationUser User { get; set; }
 
         //User can view related investigation
-        public int ReportInvestigationId { get; set; }
-        public ReportInvestigation ReportInvestigation { get; set; }
+        public int InvestigationId { get; set; }
+        public Investigation Investigation { get; set; }
         public int StatusId { get; set; }
         public Status Status { get; set; }
         
