@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NEMESYS.Controllers
 {
-    [Authorize(Roles = "Reporter")]
+    [Authorize(Roles = "Reporter, Investigator")]
     public class ReportController : Controller
     {
         private readonly IReportRepository _reportRepository;

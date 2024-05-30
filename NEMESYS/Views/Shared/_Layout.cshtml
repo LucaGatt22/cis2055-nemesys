@@ -29,13 +29,16 @@
                                 <a class="nav-link text-dark" asp-controller="Report" asp-action="Index">Reports</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Report" asp-action="Create">Create New</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Report" asp-action="HallOfFame">Hall of Fame</a>
                             </li>
                         }
-                        else if (User.IsInRole("Investigator"))
+                        @if (User.IsInRole("Reporter")) 
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Report" asp-action="Create">Create New</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Investigator"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Investigation" asp-action="Index">Investigations</a>

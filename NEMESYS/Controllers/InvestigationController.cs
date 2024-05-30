@@ -32,6 +32,7 @@ namespace NEMESYS.Controllers
         }
 
         [HttpGet]
+        [Route("[controller]/Index")]
         public IActionResult Index()
         {
             try
