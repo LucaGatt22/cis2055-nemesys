@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NEMESYS.Models.Contexts;
 
@@ -11,9 +12,11 @@ using NEMESYS.Models.Contexts;
 namespace NEMESYS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240527175627_AddedToInvestigationSeedData")]
+    partial class AddedToInvestigationSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,17 +270,17 @@ namespace NEMESYS.Migrations
                         {
                             Id = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2dbf8de9-055c-4423-9ff9-40e6fc76b749",
+                            ConcurrencyStamp = "e19fd667-c653-44ef-8330-a8ca116ccfab",
                             CustomUsername = "test",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELcGS+pKF9iVgTrj38JSOUSzN0D5eaIkM5Sfr+7WaPjnZKi3pxNNPArU739PqjyYSQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECUK5btwwOK88petssDOFkP1U/eatXY849BbXWK8x+xW8X3CYhzrGnvs+iSRBHrAvg==",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "49ae9609-aa4e-4881-9ebc-b380a99d7493",
+                            SecurityStamp = "f632d525-8a44-4c44-aa5b-04dc51efc114",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         },
@@ -285,17 +288,17 @@ namespace NEMESYS.Migrations
                         {
                             Id = "357f9cab-c811-47c9-980b-6e500ef98cd8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "225d138e-81ae-41c1-8f68-f5ebe97ead8f",
+                            ConcurrencyStamp = "720156f5-f38d-4d22-a519-e0848aaa4db9",
                             CustomUsername = "testInvestigator",
                             Email = "investigator@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "INVESTIGATOR@MAIL.COM",
                             NormalizedUserName = "INVESTIGATOR@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDV1yaug9SrsXz35iavlyo5HqDpxkvAFcDw9Qm2nyY8JP2l1cNQgDmQpfeQ4UCKYcA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJAHeSywk+TGNXGXsZm8ZciJkGNZ8WxWyWlzj9uEF1TfUhUTqqOI/TAqeFI4PbThoA==",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "32cedd71-1cf9-49d4-8009-db7d0959a5bc",
+                            SecurityStamp = "cb2316b8-98eb-4d3d-ad72-4895d20e02cd",
                             TwoFactorEnabled = false,
                             UserName = "investigator@mail.com"
                         });
@@ -315,7 +318,7 @@ namespace NEMESYS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CampusCategories", (string)null);
+                    b.ToTable("CampusCategories");
 
                     b.HasData(
                         new
@@ -359,9 +362,6 @@ namespace NEMESYS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReportId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -377,29 +377,27 @@ namespace NEMESYS.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Investigations", (string)null);
+                    b.ToTable("Investigations");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Content = "Today's AGA is characterized by ...",
-                            CreatedDate = new DateTime(2024, 5, 29, 17, 26, 49, 533, DateTimeKind.Utc).AddTicks(9640),
+                            CreatedDate = new DateTime(2024, 5, 27, 17, 56, 26, 796, DateTimeKind.Utc).AddTicks(8310),
                             ImageUrl = "/images/seed1.jpg",
-                            ReportId = 0,
                             Title = "AGA Today",
-                            UpdatedDate = new DateTime(2024, 5, 29, 17, 26, 49, 533, DateTimeKind.Utc).AddTicks(9642),
+                            UpdatedDate = new DateTime(2024, 5, 27, 17, 56, 26, 796, DateTimeKind.Utc).AddTicks(8311),
                             UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8"
                         },
                         new
                         {
                             Id = 2,
                             Content = "Today's traffic can't be described using words...",
-                            CreatedDate = new DateTime(2024, 5, 28, 17, 26, 49, 533, DateTimeKind.Utc).AddTicks(9662),
+                            CreatedDate = new DateTime(2024, 5, 26, 17, 56, 26, 796, DateTimeKind.Utc).AddTicks(8327),
                             ImageUrl = "/images/seed2.jpg",
-                            ReportId = 0,
                             Title = "Traffic is incredible",
-                            UpdatedDate = new DateTime(2024, 5, 28, 17, 26, 49, 533, DateTimeKind.Utc).AddTicks(9663),
+                            UpdatedDate = new DateTime(2024, 5, 26, 17, 56, 26, 796, DateTimeKind.Utc).AddTicks(8328),
                             UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8"
                         });
                 });
@@ -426,7 +424,7 @@ namespace NEMESYS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("InvestigationId")
+                    b.Property<int>("InvestigationId")
                         .HasColumnType("int");
 
                     b.Property<int>("ReadCount")
@@ -450,15 +448,13 @@ namespace NEMESYS.Migrations
 
                     b.HasIndex("CampusCategoryId");
 
-                    b.HasIndex("InvestigationId")
-                        .IsUnique()
-                        .HasFilter("[InvestigationId] IS NOT NULL");
+                    b.HasIndex("InvestigationId");
 
                     b.HasIndex("StatusId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reports", (string)null);
+                    b.ToTable("Reports");
 
                     b.HasData(
                         new
@@ -466,13 +462,13 @@ namespace NEMESYS.Migrations
                             Id = 1,
                             CampusCategoryId = 1,
                             Content = "Today's AGA is characterized by a series of discussions and debates around ...",
-                            CreatedDate = new DateTime(2024, 5, 29, 17, 26, 49, 533, DateTimeKind.Utc).AddTicks(9507),
+                            CreatedDate = new DateTime(2024, 5, 27, 17, 56, 26, 796, DateTimeKind.Utc).AddTicks(8226),
                             ImageUrl = "/images/seed1.jpg",
-                            InvestigationId = 1,
+                            InvestigationId = 0,
                             ReadCount = 0,
                             StatusId = 1,
                             Title = "AGA Today",
-                            UpdatedDate = new DateTime(2024, 5, 29, 17, 26, 49, 533, DateTimeKind.Utc).AddTicks(9526),
+                            UpdatedDate = new DateTime(2024, 5, 27, 17, 56, 26, 796, DateTimeKind.Utc).AddTicks(8233),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         },
                         new
@@ -480,13 +476,13 @@ namespace NEMESYS.Migrations
                             Id = 2,
                             CampusCategoryId = 2,
                             Content = "Today's traffic can't be described using words. Only an image can do that ...",
-                            CreatedDate = new DateTime(2024, 5, 28, 17, 26, 49, 533, DateTimeKind.Utc).AddTicks(9534),
+                            CreatedDate = new DateTime(2024, 5, 26, 17, 56, 26, 796, DateTimeKind.Utc).AddTicks(8236),
                             ImageUrl = "/images/seed2.jpg",
-                            InvestigationId = 2,
+                            InvestigationId = 0,
                             ReadCount = 0,
                             StatusId = 2,
                             Title = "Traffic is incredible",
-                            UpdatedDate = new DateTime(2024, 5, 29, 17, 26, 49, 533, DateTimeKind.Utc).AddTicks(9560),
+                            UpdatedDate = new DateTime(2024, 5, 27, 17, 56, 26, 796, DateTimeKind.Utc).AddTicks(8247),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         },
                         new
@@ -494,12 +490,13 @@ namespace NEMESYS.Migrations
                             Id = 3,
                             CampusCategoryId = 3,
                             Content = "Clouds clouds all around us. I thought spring started already, but ...",
-                            CreatedDate = new DateTime(2024, 5, 27, 17, 26, 49, 533, DateTimeKind.Utc).AddTicks(9564),
+                            CreatedDate = new DateTime(2024, 5, 25, 17, 56, 26, 796, DateTimeKind.Utc).AddTicks(8250),
                             ImageUrl = "/images/seed3.jpg",
+                            InvestigationId = 0,
                             ReadCount = 0,
                             StatusId = 3,
                             Title = "When is Spring really starting?",
-                            UpdatedDate = new DateTime(2024, 5, 29, 17, 26, 49, 533, DateTimeKind.Utc).AddTicks(9565),
+                            UpdatedDate = new DateTime(2024, 5, 27, 17, 56, 26, 796, DateTimeKind.Utc).AddTicks(8250),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         });
                 });
@@ -518,7 +515,7 @@ namespace NEMESYS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
 
                     b.HasData(
                         new
@@ -609,9 +606,10 @@ namespace NEMESYS.Migrations
                         .IsRequired();
 
                     b.HasOne("NEMESYS.Models.Investigation", "Investigation")
-                        .WithOne("Report")
-                        .HasForeignKey("NEMESYS.Models.Report", "InvestigationId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .WithMany()
+                        .HasForeignKey("InvestigationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("NEMESYS.Models.Status", "Status")
                         .WithMany("Reports")
@@ -637,12 +635,6 @@ namespace NEMESYS.Migrations
             modelBuilder.Entity("NEMESYS.Models.CampusCategory", b =>
                 {
                     b.Navigation("Reports");
-                });
-
-            modelBuilder.Entity("NEMESYS.Models.Investigation", b =>
-                {
-                    b.Navigation("Report")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("NEMESYS.Models.Status", b =>

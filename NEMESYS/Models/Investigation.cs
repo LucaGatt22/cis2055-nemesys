@@ -17,5 +17,8 @@ namespace NEMESYS.Models
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
+        public int ReportId { get; set; }
+        public Report Report { get; set; }
+
     }
 }

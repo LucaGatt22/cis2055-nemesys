@@ -5,6 +5,7 @@ using NEMESYS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace NEMESYS.Controllers
 {
@@ -27,6 +28,7 @@ namespace NEMESYS.Controllers
             _logger = logger;
         }
 
+        [Route("[controller]/Index")]
         public IActionResult Index()
         {
             try
@@ -41,11 +43,8 @@ namespace NEMESYS.Controllers
                 var reports = _reportRepository.GetAllReports().OrderByDescending(b => b.CreatedDate); ;
                 var model = new ReportListViewModel()
                 {
-                    TotalEntries = _reportRepository.GetAllReports().Count(),
-                    Reports = _reportRepository
-                    .GetAllReports()
-                    .OrderByDescending(b => b.CreatedDate)
-                    .Select(b => new ReportViewModel
+                    TotalEntries = reports.Count(),
+                    Reports = reports.Select(b => new ReportViewModel
                     {
                         Id = b.Id,
                         CreatedDate = b.CreatedDate,
@@ -69,7 +68,7 @@ namespace NEMESYS.Controllers
                             Name = b.Status.Name
                         }
 
-                    })
+                    }).ToList()
                 };
                
 
@@ -197,7 +196,8 @@ namespace NEMESYS.Controllers
                         CreatedDate = DateTime.UtcNow,
                         ImageUrl = "/images/reports/" + fileName,
                         CampusCategoryId = newReport.CampusCategoryId,
-                        UserId = _userManager.GetUserId(User)
+                        UserId = _userManager.GetUserId(User),
+                        StatusId = 4
                     };
 
                     //Persist to repository
@@ -344,6 +344,20 @@ namespace NEMESYS.Controllers
                 return View("Error");
             }
         }
+        [HttpGet]
+        public IActionResult HallOfFame()
+        {
+            //var reporterFrequencies
+            
+
+            var model = new HallOfFameViewModel
+            {
+                TopReporters = _reportRepository.GetReporterFrequencies()
+            };
+
+            return View(model);
+        }
+
 
     }
 }

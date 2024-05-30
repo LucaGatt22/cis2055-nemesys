@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NEMESYS.Models.Contexts;
 
@@ -12,11 +11,9 @@ using NEMESYS.Models.Contexts;
 namespace NEMESYS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240527172247_AddedToInvestigationSeedData")]
-    partial class AddedToInvestigationSeedData
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -270,17 +267,17 @@ namespace NEMESYS.Migrations
                         {
                             Id = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f34d6db5-37c9-4192-bd6e-e16608253adc",
+                            ConcurrencyStamp = "c43b52c5-4aaf-4ba6-a3e1-80416ae7b362",
                             CustomUsername = "test",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDFaRMG+k5fhO7bxf4Q2GkFOb+cRiGwCqzGIYkx1PGKUJXXPoqhH8SKC94yAqlWx5g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBlT5cJOkmFFAlKbcFYjSFZEh7XsRI2+q5/+sC3kifMPCc5vpXmoPsvBCZzZeA2T1A==",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8054ba83-70b8-4f45-9fe9-a5b8783bfafd",
+                            SecurityStamp = "8d0e02e4-cdc8-46b3-a889-15059a6a0556",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         },
@@ -288,17 +285,17 @@ namespace NEMESYS.Migrations
                         {
                             Id = "357f9cab-c811-47c9-980b-6e500ef98cd8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2a3fc5a6-439d-4820-9de8-81977968284a",
+                            ConcurrencyStamp = "e607ab02-8ba1-4194-850b-c4005a21bbde",
                             CustomUsername = "testInvestigator",
                             Email = "investigator@mail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "INVESTIGATOR@MAIL.COM",
                             NormalizedUserName = "INVESTIGATOR@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ3AoGNCHzJ+MJRaeIFCRwgEX/z/gJqMvdfTkk/uJFe9p/RAd6zurWIHcZfFQMPq9Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ0SxQqVDPmkITWHXsTO+CGcZP+z9IqK9FdhLI52nmGCnNmnmztKZKSlXUFn9g9fmg==",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5eb25e87-eddf-469f-87e3-ff4634fc2575",
+                            SecurityStamp = "37209098-cd30-4e13-8f22-4ccd3c406c7f",
                             TwoFactorEnabled = false,
                             UserName = "investigator@mail.com"
                         });
@@ -318,7 +315,7 @@ namespace NEMESYS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CampusCategories");
+                    b.ToTable("CampusCategories", (string)null);
 
                     b.HasData(
                         new
@@ -377,27 +374,27 @@ namespace NEMESYS.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Investigations");
+                    b.ToTable("Investigations", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Content = "Today's AGA is characterized by ...",
-                            CreatedDate = new DateTime(2024, 5, 27, 17, 22, 47, 109, DateTimeKind.Utc).AddTicks(8828),
+                            CreatedDate = new DateTime(2024, 5, 28, 14, 6, 55, 483, DateTimeKind.Utc).AddTicks(1228),
                             ImageUrl = "/images/seed1.jpg",
                             Title = "AGA Today",
-                            UpdatedDate = new DateTime(2024, 5, 27, 17, 22, 47, 109, DateTimeKind.Utc).AddTicks(8829),
+                            UpdatedDate = new DateTime(2024, 5, 28, 14, 6, 55, 483, DateTimeKind.Utc).AddTicks(1229),
                             UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8"
                         },
                         new
                         {
                             Id = 2,
                             Content = "Today's traffic can't be described using words...",
-                            CreatedDate = new DateTime(2024, 5, 26, 17, 22, 47, 109, DateTimeKind.Utc).AddTicks(9073),
+                            CreatedDate = new DateTime(2024, 5, 27, 14, 6, 55, 483, DateTimeKind.Utc).AddTicks(1233),
                             ImageUrl = "/images/seed2.jpg",
                             Title = "Traffic is incredible",
-                            UpdatedDate = new DateTime(2024, 5, 26, 17, 22, 47, 109, DateTimeKind.Utc).AddTicks(9075),
+                            UpdatedDate = new DateTime(2024, 5, 27, 14, 6, 55, 483, DateTimeKind.Utc).AddTicks(1234),
                             UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8"
                         });
                 });
@@ -454,7 +451,7 @@ namespace NEMESYS.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reports");
+                    b.ToTable("Reports", (string)null);
 
                     b.HasData(
                         new
@@ -462,13 +459,13 @@ namespace NEMESYS.Migrations
                             Id = 1,
                             CampusCategoryId = 1,
                             Content = "Today's AGA is characterized by a series of discussions and debates around ...",
-                            CreatedDate = new DateTime(2024, 5, 27, 17, 22, 47, 109, DateTimeKind.Utc).AddTicks(8762),
+                            CreatedDate = new DateTime(2024, 5, 28, 14, 6, 55, 483, DateTimeKind.Utc).AddTicks(1194),
                             ImageUrl = "/images/seed1.jpg",
                             InvestigationId = 0,
                             ReadCount = 0,
                             StatusId = 1,
                             Title = "AGA Today",
-                            UpdatedDate = new DateTime(2024, 5, 27, 17, 22, 47, 109, DateTimeKind.Utc).AddTicks(8765),
+                            UpdatedDate = new DateTime(2024, 5, 28, 14, 6, 55, 483, DateTimeKind.Utc).AddTicks(1197),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         },
                         new
@@ -476,13 +473,13 @@ namespace NEMESYS.Migrations
                             Id = 2,
                             CampusCategoryId = 2,
                             Content = "Today's traffic can't be described using words. Only an image can do that ...",
-                            CreatedDate = new DateTime(2024, 5, 26, 17, 22, 47, 109, DateTimeKind.Utc).AddTicks(8769),
+                            CreatedDate = new DateTime(2024, 5, 27, 14, 6, 55, 483, DateTimeKind.Utc).AddTicks(1199),
                             ImageUrl = "/images/seed2.jpg",
                             InvestigationId = 0,
                             ReadCount = 0,
                             StatusId = 2,
                             Title = "Traffic is incredible",
-                            UpdatedDate = new DateTime(2024, 5, 27, 17, 22, 47, 109, DateTimeKind.Utc).AddTicks(8775),
+                            UpdatedDate = new DateTime(2024, 5, 28, 14, 6, 55, 483, DateTimeKind.Utc).AddTicks(1204),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         },
                         new
@@ -490,13 +487,13 @@ namespace NEMESYS.Migrations
                             Id = 3,
                             CampusCategoryId = 3,
                             Content = "Clouds clouds all around us. I thought spring started already, but ...",
-                            CreatedDate = new DateTime(2024, 5, 25, 17, 22, 47, 109, DateTimeKind.Utc).AddTicks(8778),
+                            CreatedDate = new DateTime(2024, 5, 26, 14, 6, 55, 483, DateTimeKind.Utc).AddTicks(1205),
                             ImageUrl = "/images/seed3.jpg",
                             InvestigationId = 0,
                             ReadCount = 0,
                             StatusId = 3,
                             Title = "When is Spring really starting?",
-                            UpdatedDate = new DateTime(2024, 5, 27, 17, 22, 47, 109, DateTimeKind.Utc).AddTicks(8779),
+                            UpdatedDate = new DateTime(2024, 5, 28, 14, 6, 55, 483, DateTimeKind.Utc).AddTicks(1206),
                             UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
                         });
                 });
@@ -515,7 +512,7 @@ namespace NEMESYS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses");
+                    b.ToTable("Statuses", (string)null);
 
                     b.HasData(
                         new

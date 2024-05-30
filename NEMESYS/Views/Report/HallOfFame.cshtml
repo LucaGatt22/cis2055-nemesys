@@ -1,0 +1,30 @@
+﻿@model HallOfFameViewModel
+
+@{
+    ViewData["Title"] = "Hall of Fame";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h2>Top Reporters by Report Frequency</h2>
+
+@if (Model.TopReporters.Count == 0)
+{
+    <p>No reports have been submitted yet.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var reporter in Model.TopReporters)
+        {
+            <div class="card" style="width: 18rem; padding: 20px; margin: 20px;">
+                <div class="card-body">
+                    <h3 class="card-title">@reporter.Name</h3>
+                    <p class="card-text">@reporter.ReportCount reports submitted.</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+
+

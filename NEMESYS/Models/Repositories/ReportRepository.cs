@@ -1,10 +1,12 @@
 ﻿using NEMESYS.Models.Contexts;
 using NEMESYS.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using NEMESYS.ViewModels;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace NEMESYS.Models.Repositories
 {
-    public class ReportRepository: IReportRepository
+    public class ReportRepository : IReportRepository
     {
 
         private readonly AppDbContext _appDbContext;
@@ -13,7 +15,7 @@ namespace NEMESYS.Models.Repositories
         public ReportRepository(AppDbContext appDbContext, ILogger<ReportRepository> logger)
         {
             _appDbContext = appDbContext;
-            _logger = logger;  
+            _logger = logger;
         }
 
 
@@ -22,7 +24,7 @@ namespace NEMESYS.Models.Repositories
             try
             {
                 //Using Eager loading with Include
-                return _appDbContext.Reports.Include(b => b.CampusCategory).OrderBy(b => b.CreatedDate);
+                return _appDbContext.Reports.Include(b => b.CampusCategory).Include(b => b.Status).OrderBy(b => b.CreatedDate);
             }
             catch (Exception ex)
             {
@@ -36,10 +38,9 @@ namespace NEMESYS.Models.Repositories
             try
             {
                 //Using Eager loading with Include
-                var x = _appDbContext.Reports.Where(bp => bp.Id == reportId).FirstOrDefault().Content;
-                return _appDbContext.Reports.Include(b => b.CampusCategory).FirstOrDefault(p => p.Id == reportId);
+                return _appDbContext.Reports.Include(b => b.CampusCategory).Include(b => b.Status).FirstOrDefault(p => p.Id == reportId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
                 throw;
@@ -141,5 +142,38 @@ namespace NEMESYS.Models.Repositories
             }
         }
 
+        public IList<ReporterInfo> GetReporterFrequencies()
+        {
+            var reporterFrequencies = _appDbContext.Reports
+                .GroupBy(r => r.UserId)
+                .Select(g => new ReporterInfo
+                {
+                    Name = g.First().User.Email, // Assuming Author is navigable from Report
+                    ReportCount = g.Count()
+                })
+                .OrderByDescending(r => r.ReportCount)
+                .Take(3)
+                .ToList();
+            if (reporterFrequencies != null) {
+                return reporterFrequencies;
+            } else
+            {
+                return null;
+            } 
+        }
+
+        /*IList<ReporterInfo> IReportRepository.GetReporterFrequencies()
+        {
+            var reporterFrequencies = _appDbContext.Reports
+            .GroupBy(r => r.UserId)
+            .Select(g => new ReporterInfo
+            {
+                Name = g.First().User.Email, // Assuming Author is navigable from Report
+                ReportCount = g.Count()
+            })
+            .OrderByDescending(r => r.ReportCount)
+            .Take(3)
+            .ToList();
+        }*/
     }
 }

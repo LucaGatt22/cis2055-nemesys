@@ -1,4 +1,6 @@
-﻿namespace NEMESYS.Models.Interfaces
+﻿using NEMESYS.ViewModels;
+
+namespace NEMESYS.Models.Interfaces
 {
     public interface IReportRepository
     {
@@ -12,7 +14,6 @@
 
         IEnumerable<ICategory> GetAllStatuses();
         ICategory GetStatusById(int statusId);
-
-
+        IList<ReporterInfo> GetReporterFrequencies();
     }
 }

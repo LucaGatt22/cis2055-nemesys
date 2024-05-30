@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NEMESYS.Models.Contexts;
 
@@ -11,9 +12,11 @@ using NEMESYS.Models.Contexts;
 namespace NEMESYS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240529172650_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,7 +318,7 @@ namespace NEMESYS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CampusCategories", (string)null);
+                    b.ToTable("CampusCategories");
 
                     b.HasData(
                         new
@@ -377,7 +380,7 @@ namespace NEMESYS.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Investigations", (string)null);
+                    b.ToTable("Investigations");
 
                     b.HasData(
                         new
@@ -458,7 +461,7 @@ namespace NEMESYS.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reports", (string)null);
+                    b.ToTable("Reports");
 
                     b.HasData(
                         new
@@ -518,7 +521,7 @@ namespace NEMESYS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
 
                     b.HasData(
                         new

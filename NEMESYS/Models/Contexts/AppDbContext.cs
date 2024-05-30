@@ -5,7 +5,7 @@ using NEMESYS.Models.Interfaces;
 
 namespace NEMESYS.Models.Contexts
 {
-    public class AppDbContext: IdentityDbContext<ApplicationUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -17,7 +17,7 @@ namespace NEMESYS.Models.Contexts
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Investigation> Investigations { get; set; }
-        
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace NEMESYS.Models.Contexts
                 new IdentityRole() { Id = "d234f58e-7373-4ee5-98f0-c17892784b05", Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "ADMIN" },
                 new IdentityRole() { Id = "1db56103-a3e2-4edc-afab-abde856cebe0", Name = "Reporter", ConcurrencyStamp = "1", NormalizedName = "REPORTER" },
                 new IdentityRole() { Id = "90b7db83-4a71-4ef1-b3ae-07b481310175", Name = "Investigator", ConcurrencyStamp = "1", NormalizedName = "INVESTIGATOR" }
-
+                
             );
 
 
@@ -53,10 +53,24 @@ namespace NEMESYS.Models.Contexts
             {
                 Id = "357f9cab-c811-47c9-980b-6e500ef98cd8", //https://www.guidgenerator.com/online-guid-generator.aspx
                 CustomUsername = "testInvestigator",
-                UserName = "investigator@mail.com", //Has to be the email address for the login logic to work
-                NormalizedUserName = "INVESTIGATOR@MAIL.COM",
-                Email = "investigator@mail.com",
-                NormalizedEmail = "INVESTIGATOR@MAIL.COM",
+                UserName = "investigator@um.edu.mt", //Has to be the email address for the login logic to work
+                NormalizedUserName = "INVESTIGATOR@UM.EDU.MT",
+                Email = "investigator@um.edu.mt",
+                NormalizedEmail = "INVESTIGATOR@UM.EDU.MT",
+                LockoutEnabled = false,
+                EmailConfirmed = true,
+                PhoneNumber = ""
+            };
+
+            //Seed Reporter user
+            ApplicationUser userReporter = new ApplicationUser()
+            {
+                Id = "9edabef2-abdd-439d-99b3-411d6fb66e32", //https://www.guidgenerator.com/online-guid-generator.aspx
+                CustomUsername = "testReporter",
+                UserName = "reporter.nemesys@um.edu.mt", //Has to be the email address for the login logic to work
+                NormalizedUserName = "REPORTER.NEMESYS@UM.EDU.MT",
+                Email = "reporter.nemesys@um.edu.mt",
+                NormalizedEmail = "REPORTER.NEMESYS@UM.EDU.MT",
                 LockoutEnabled = false,
                 EmailConfirmed = true,
                 PhoneNumber = ""
@@ -65,16 +79,17 @@ namespace NEMESYS.Models.Contexts
             PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
             userAdmin.PasswordHash = passwordHasher.HashPassword(userAdmin, "S@fePassw0rd1"); //make sure you adhere to policies (incl confirmed etc…)
             userInvestigator.PasswordHash = passwordHasher.HashPassword(userInvestigator, "S@fePassw0rd1");
-            modelBuilder.Entity<ApplicationUser>().HasData(userAdmin,userInvestigator);
+            modelBuilder.Entity<ApplicationUser>().HasData(userAdmin, userInvestigator);
 
             //Assign existing userAdmin to the admin role and investigator to investigator role.
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>() { RoleId = "d234f58e-7373-4ee5-98f0-c17892784b05", UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32" },
-                new IdentityUserRole<string>() { RoleId = "90b7db83-4a71-4ef1-b3ae-07b481310175", UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8" }
+                new IdentityUserRole<string>() { RoleId = "90b7db83-4a71-4ef1-b3ae-07b481310175", UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8" },
+                new IdentityUserRole<string>() { RoleId = "1db56103-a3e2-4edc-afab-abde856cebe0", UserId = "9edabef2-abdd-439d-99b3-411d6fb66e32" }
             );
 
             modelBuilder.Entity<CampusCategory>().HasData(
-                new CampusCategory() 
+                new CampusCategory()
                 {
                     Id = 1,
                     Name = "Msida Campus"
@@ -96,6 +111,11 @@ namespace NEMESYS.Models.Contexts
                 }
             );
             modelBuilder.Entity<Status>().HasData(
+               new Status()
+               {
+                   Id = 4,
+                   Name = "Open"
+               },
               new Status()
               {
                   Id = 1,
@@ -123,8 +143,9 @@ namespace NEMESYS.Models.Contexts
                     UpdatedDate = DateTime.UtcNow,
                     ImageUrl = "/images/seed1.jpg",
                     CampusCategoryId = 1,
-                    StatusId = 1,
-                    UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
+                    StatusId = 4,
+                    InvestigationId = 1,
+                    UserId = "9edabef2-abdd-439d-99b3-411d6fb66e32"
                 },
                 new Report()
                 {
@@ -136,7 +157,8 @@ namespace NEMESYS.Models.Contexts
                     ImageUrl = "/images/seed2.jpg",
                     CampusCategoryId = 2,
                     StatusId = 2,
-                    UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
+                    InvestigationId = 2,
+                    UserId = "9edabef2-abdd-439d-99b3-411d6fb66e32"
                 },
                 new Report()
                 {
@@ -148,35 +170,44 @@ namespace NEMESYS.Models.Contexts
                     ImageUrl = "/images/seed3.jpg",
                     CampusCategoryId = 3,
                     StatusId = 3,
-                    UserId = "134c1566-3f64-4ab4-b1e7-2ffe11f43e32"
+                    UserId = "9edabef2-abdd-439d-99b3-411d6fb66e32"
                 }
             );
             modelBuilder.Entity<Investigation>().HasData(
                 new List<Investigation>
                 {
-                    new Investigation() 
-                    { 
+                    new Investigation()
+                    {
                         Id = 1,
                         UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8",
-                        Title = "AGA Today", 
-                        Content = "Today's AGA is characterized by ...", 
-                        CreatedDate = DateTime.UtcNow, 
+                        Title = "AGA Today",
+                        Content = "Today's AGA is characterized by ...",
+                        CreatedDate = DateTime.UtcNow,
                         UpdatedDate = DateTime.UtcNow,
-                        ImageUrl = "/images/seed1.jpg" 
+                        ImageUrl = "/images/seed1.jpg"
                     },
-                    new Investigation() 
-                    { 
+                    new Investigation()
+                    {
                         Id = 2,
                         UserId = "357f9cab-c811-47c9-980b-6e500ef98cd8",
-                        Title = "Traffic is incredible", 
-                        Content = "Today's traffic can't be described using words...", 
-                        CreatedDate = DateTime.UtcNow.AddDays(-1), 
+                        Title = "Traffic is incredible",
+                        Content = "Today's traffic can't be described using words...",
+                        CreatedDate = DateTime.UtcNow.AddDays(-1),
                         UpdatedDate = DateTime.UtcNow.AddDays(-1),
-                        ImageUrl = "/images/seed2.jpg" 
+                        ImageUrl = "/images/seed2.jpg"
                     }
                 });
-         }
 
+            modelBuilder.Entity<Report>()
+                .HasOne(r => r.Investigation) // Navigation property in Report
+                .WithOne(i => i.Report)       // Navigation property in Investigation pointing back to Report
+                .HasForeignKey<Report>(r => r.InvestigationId) // Specify foreign key in the dependent entity
+                .OnDelete(DeleteBehavior.NoAction); // This will restrict deletion
+        }
 
     }
 }
+
+
+
+

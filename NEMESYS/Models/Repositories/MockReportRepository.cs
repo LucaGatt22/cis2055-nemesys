@@ -1,5 +1,6 @@
 ﻿using NEMESYS.Models.Interfaces;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using NEMESYS.ViewModels;
 
 namespace NEMESYS.Models.Repositories
 {
@@ -151,5 +152,9 @@ namespace NEMESYS.Models.Repositories
             return status;
         }
 
+        public IList<ReporterInfo> GetReporterFrequencies()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
